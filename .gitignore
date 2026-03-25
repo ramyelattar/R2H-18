@@ -1,0 +1,26 @@
+# Android
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/app/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Signing keys — NEVER commit
+*.jks
+*.keystore
+igniteai-release.jks
+
+# Environment
+.env
+*.env
+
+# IDE
+.idea/
+*.swp
+*~
