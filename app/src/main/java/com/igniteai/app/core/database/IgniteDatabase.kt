@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.igniteai.app.data.dao.ContentDao
 import com.igniteai.app.data.dao.EngagementDao
+import com.igniteai.app.data.dao.FantasyDao
 import com.igniteai.app.data.dao.PairingDao
 import com.igniteai.app.data.model.ContentItem
 import com.igniteai.app.data.model.CoupleProfile
@@ -48,10 +49,10 @@ abstract class IgniteDatabase : RoomDatabase() {
     abstract fun contentDao(): ContentDao
     abstract fun engagementDao(): EngagementDao
     abstract fun pairingDao(): PairingDao
+    abstract fun fantasyDao(): FantasyDao
 
     // DAOs added as each feature module is built:
     // abstract fun sessionDao(): SessionDao
-    // abstract fun fantasyDao(): FantasyDao
     // abstract fun vaultDao(): VaultDao
     // abstract fun scenarioDao(): ScenarioDao
     // abstract fun licenseDao(): LicenseDao
