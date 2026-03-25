@@ -6,12 +6,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.igniteai.app.feature.onboarding.BiometricSetupScreen
+import com.igniteai.app.feature.onboarding.OnboardingViewModel
+import com.igniteai.app.feature.onboarding.PairingScreen
+import com.igniteai.app.feature.onboarding.PartnerSetupScreen
+import com.igniteai.app.feature.onboarding.PinSetupScreen
+import com.igniteai.app.feature.onboarding.WelcomeScreen
 import com.igniteai.app.ui.theme.AbyssBlack
 
 /**
@@ -70,13 +78,17 @@ object Routes {
  * - No couple profile → WELCOME (onboarding)
  * - Has profile → AUTH_GATE (biometric unlock) → HOME
  *
- * All screens are placeholder Text() composables for now.
- * Actual screens replace these as each feature task is completed.
+ * Onboarding screens are wired to real composables.
+ * Other screens remain placeholder until their feature tasks complete.
+ *
+ * @param onboardingViewModel Shared ViewModel for onboarding flow state.
+ *        Pass null when onboarding is already complete (skips ViewModel creation).
  */
 @Composable
 fun IgniteNavGraph(
     navController: NavHostController = rememberNavController(),
     startDestination: String = Routes.WELCOME,
+    onboardingViewModel: OnboardingViewModel? = null,
 ) {
     NavHost(
         navController = navController,
@@ -84,21 +96,100 @@ fun IgniteNavGraph(
     ) {
         // ── Onboarding ──────────────────────────────────────
         composable(Routes.WELCOME) {
-            PlaceholderScreen("Welcome to IgniteAI 🔥")
+            WelcomeScreen(
+                onGetStarted = {
+                    navController.navigate(Routes.PARTNER_SETUP)
+                },
+            )
         }
+
         composable(Routes.PARTNER_SETUP) {
-            PlaceholderScreen("Partner Setup")
+            val state by onboardingViewModel!!.state.collectAsState()
+
+            PartnerSetupScreen(
+                partnerName = state.partnerName,
+                error = state.error,
+                onNameChanged = { onboardingViewModel.setPartnerName(it) },
+                onContinue = {
+                    onboardingViewModel.confirmPartnerName()
+                    if (state.partnerName.isNotBlank()) {
+                        navController.navigate(Routes.BIOMETRIC_SETUP)
+                    }
+                },
+            )
         }
+
         composable(Routes.BIOMETRIC_SETUP) {
-            PlaceholderScreen("Biometric Setup")
+            BiometricSetupScreen(
+                onEnableBiometric = {
+                    // In real implementation, this triggers BiometricAuthManager.authenticate()
+                    // from the Activity. For now, treat as success.
+                    onboardingViewModel?.onBiometricSuccess()
+                    navController.navigate(Routes.PIN_SETUP)
+                },
+                onSkip = {
+                    onboardingViewModel?.onBiometricSkipped()
+                    navController.navigate(Routes.PIN_SETUP)
+                },
+            )
         }
+
         composable(Routes.PIN_SETUP) {
-            PlaceholderScreen("PIN Setup")
+            val state by onboardingViewModel!!.state.collectAsState()
+
+            PinSetupScreen(
+                pin = state.pin,
+                pinConfirm = state.pinConfirm,
+                pinError = state.pinError,
+                onPinChanged = { onboardingViewModel.setPin(it) },
+                onPinConfirmChanged = { onboardingViewModel.setPinConfirm(it) },
+                onConfirm = {
+                    onboardingViewModel.confirmPin()
+                    // Navigation happens via state observation —
+                    // when step changes to PAIRING, we navigate
+                },
+            )
+
+            // React to step changes from ViewModel
+            if (state.step == OnboardingViewModel.OnboardingStep.PAIRING) {
+                navController.navigate(Routes.PAIRING) {
+                    popUpTo(Routes.PIN_SETUP) { inclusive = true }
+                }
+            }
         }
+
         composable(Routes.PAIRING) {
-            PlaceholderScreen("Couple Pairing")
+            val state by onboardingViewModel!!.state.collectAsState()
+
+            PairingScreen(
+                inviteCode = state.inviteCode,
+                inviteCodeInput = state.inviteCodeInput,
+                pairingStatus = state.pairingStatus,
+                qrPayload = state.qrPayload,
+                onGenerateCode = { onboardingViewModel.generateInviteCode() },
+                onInviteCodeInputChanged = { onboardingViewModel.setInviteCodeInput(it) },
+                onJoinWithCode = { onboardingViewModel.joinWithInviteCode() },
+                onGenerateQr = { onboardingViewModel.generateQrPayload() },
+                onSkipPairing = {
+                    onboardingViewModel.skipPairing()
+                    navController.navigate(Routes.FANTASY_QUESTIONNAIRE) {
+                        popUpTo(Routes.WELCOME) { inclusive = true }
+                    }
+                },
+            )
+
+            // Navigate when pairing completes
+            if (state.step == OnboardingViewModel.OnboardingStep.FANTASY_QUESTIONNAIRE &&
+                state.pairingStatus == OnboardingViewModel.PairingStatus.CONNECTED
+            ) {
+                navController.navigate(Routes.FANTASY_QUESTIONNAIRE) {
+                    popUpTo(Routes.WELCOME) { inclusive = true }
+                }
+            }
         }
+
         composable(Routes.FANTASY_QUESTIONNAIRE) {
+            // Will be implemented in Task 8
             PlaceholderScreen("Fantasy Questionnaire")
         }
 
