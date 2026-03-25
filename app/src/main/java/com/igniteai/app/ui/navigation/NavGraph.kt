@@ -20,6 +20,10 @@ import com.igniteai.app.feature.onboarding.PairingScreen
 import com.igniteai.app.feature.onboarding.PartnerSetupScreen
 import com.igniteai.app.feature.onboarding.PinSetupScreen
 import com.igniteai.app.feature.onboarding.WelcomeScreen
+import com.igniteai.app.feature.session.ConsentGateScreen
+import com.igniteai.app.feature.session.CoolDownScreen
+import com.igniteai.app.feature.session.SessionScreen
+import com.igniteai.app.feature.session.SessionViewModel
 import com.igniteai.app.ui.theme.AbyssBlack
 
 /**
@@ -89,6 +93,7 @@ fun IgniteNavGraph(
     navController: NavHostController = rememberNavController(),
     startDestination: String = Routes.WELCOME,
     onboardingViewModel: OnboardingViewModel? = null,
+    sessionViewModel: SessionViewModel? = null,
 ) {
     NavHost(
         navController = navController,
@@ -203,13 +208,61 @@ fun IgniteNavGraph(
 
         // ── Session ─────────────────────────────────────────
         composable(Routes.CONSENT_GATE) {
-            PlaceholderScreen("Consent Gate\nBoth partners authenticate")
+            val uiState by sessionViewModel!!.uiState.collectAsState()
+
+            ConsentGateScreen(
+                localConsented = uiState.localConsented,
+                partnerConsented = uiState.partnerConsented,
+                onAuthenticateLocal = {
+                    // In real implementation, this triggers BiometricAuthManager
+                    sessionViewModel.recordLocalConsent()
+                },
+                onCancel = {
+                    sessionViewModel.returnToHome()
+                    navController.popBackStack(Routes.HOME, inclusive = false)
+                },
+            )
+
+            // Navigate when both consent
+            if (uiState.state == SessionViewModel.SessionState.ACTIVE) {
+                navController.navigate(Routes.SESSION) {
+                    popUpTo(Routes.CONSENT_GATE) { inclusive = true }
+                }
+            }
         }
+
         composable(Routes.SESSION) {
-            PlaceholderScreen("Active Session")
+            val uiState by sessionViewModel!!.uiState.collectAsState()
+
+            SessionScreen(
+                uiState = uiState,
+                onSafeword = { sessionViewModel.triggerSafeword() },
+                onCheckInContinue = { sessionViewModel.confirmCheckIn() },
+                onCheckInEnd = { sessionViewModel.declineCheckIn() },
+                onEndSession = { sessionViewModel.endSession() },
+            )
+
+            // Navigate to cool-down when session ends
+            if (uiState.state == SessionViewModel.SessionState.COOL_DOWN) {
+                navController.navigate(Routes.COOL_DOWN) {
+                    popUpTo(Routes.SESSION) { inclusive = true }
+                }
+            }
         }
+
         composable(Routes.COOL_DOWN) {
-            PlaceholderScreen("Cool Down")
+            val uiState by sessionViewModel!!.uiState.collectAsState()
+
+            CoolDownScreen(
+                safewordTriggered = uiState.safewordTriggered,
+                sessionDurationMinutes = uiState.sessionDurationMinutes,
+                onReturnHome = {
+                    sessionViewModel.returnToHome()
+                    navController.navigate(Routes.HOME) {
+                        popUpTo(Routes.COOL_DOWN) { inclusive = true }
+                    }
+                },
+            )
         }
 
         // ── Content (Spark) ─────────────────────────────────

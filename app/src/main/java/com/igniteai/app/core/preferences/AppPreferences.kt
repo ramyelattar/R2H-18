@@ -127,6 +127,10 @@ class AppPreferences(private val context: Context) {
         it[Keys.VOICE_SAFEWORD_ENABLED] ?: false
     }
 
+    val denyDelayDuration: Flow<Int> = context.dataStore.data.map {
+        it[Keys.DENY_DELAY_DURATION] ?: 10 // Default: 10 seconds
+    }
+
     val contentLoadedVersion: Flow<Int> = context.dataStore.data.map {
         it[Keys.CONTENT_LOADED_VERSION] ?: 0
     }
