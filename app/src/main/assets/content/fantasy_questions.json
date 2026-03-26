@@ -1,0 +1,178 @@
+[
+  {
+    "id": "q-role-01",
+    "category": "roles",
+    "text": "How do you feel about taking the lead during intimate moments?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5"],
+    "labels": { "1": "Not for me", "3": "Sometimes", "5": "Love it" },
+    "tags": ["dominant", "control", "leading"]
+  },
+  {
+    "id": "q-role-02",
+    "category": "roles",
+    "text": "How do you feel about letting your partner take full control?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5"],
+    "labels": { "1": "Not for me", "3": "Sometimes", "5": "Love it" },
+    "tags": ["submissive", "surrender", "trust"]
+  },
+  {
+    "id": "q-role-03",
+    "category": "roles",
+    "text": "Would you enjoy switching between dominant and submissive roles?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5"],
+    "labels": { "1": "No", "3": "Maybe", "5": "Absolutely" },
+    "tags": ["switch", "versatile", "power"]
+  },
+  {
+    "id": "q-scenario-01",
+    "category": "scenarios",
+    "text": "Which types of scenarios appeal to you?",
+    "type": "checkbox",
+    "options": ["Romantic & tender", "Playful & teasing", "Rough & passionate", "Experimental & new", "Fantasy & roleplay"],
+    "tags": ["romantic", "playful", "rough", "experimental", "roleplay"]
+  },
+  {
+    "id": "q-scenario-02",
+    "category": "scenarios",
+    "text": "How interested are you in roleplay scenarios (characters, settings)?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5"],
+    "labels": { "1": "Not interested", "3": "Curious", "5": "Very into it" },
+    "tags": ["roleplay", "acting", "fantasy"]
+  },
+  {
+    "id": "q-intensity-01",
+    "category": "intensity",
+    "text": "What's your maximum comfort level for dare intensity?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    "labels": { "1": "Very gentle", "5": "Moderate", "10": "No limits" },
+    "tags": ["intensity"]
+  },
+  {
+    "id": "q-tone-01",
+    "category": "tone",
+    "text": "Which tone do you prefer most?",
+    "type": "choice",
+    "options": ["Playful — fun, teasing, lighthearted", "Sensual — slow, intimate, emotional", "Raw — direct, intense, passionate"],
+    "tags": ["playful", "sensual", "raw"]
+  },
+  {
+    "id": "q-verbal-01",
+    "category": "communication",
+    "text": "How do you feel about dirty talk / explicit verbal communication?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5"],
+    "labels": { "1": "Not comfortable", "3": "It depends", "5": "Love it" },
+    "tags": ["verbal", "dirty-talk", "communication"]
+  },
+  {
+    "id": "q-touch-01",
+    "category": "touch",
+    "text": "How do you feel about light restraint (held wrists, pinned down gently)?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5"],
+    "labels": { "1": "Hard boundary", "3": "With trust", "5": "Love it" },
+    "tags": ["restraint", "wrists", "pinning"]
+  },
+  {
+    "id": "q-touch-02",
+    "category": "touch",
+    "text": "How much do you enjoy sensation play (ice, warmth, feathers, texture)?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5"],
+    "labels": { "1": "Not interested", "3": "Curious", "5": "Love it" },
+    "tags": ["sensation", "temperature", "texture"]
+  },
+  {
+    "id": "q-denial-01",
+    "category": "anticipation",
+    "text": "How do you feel about teasing and denial (building tension, making you wait)?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5"],
+    "labels": { "1": "Frustrating", "3": "Exciting sometimes", "5": "Drives me wild" },
+    "tags": ["denial", "teasing", "edging", "anticipation"]
+  },
+  {
+    "id": "q-blind-01",
+    "category": "sensory",
+    "text": "How do you feel about blindfolds or reduced visibility?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5"],
+    "labels": { "1": "Not comfortable", "3": "Would try it", "5": "Love it" },
+    "tags": ["blindfold", "sensory", "trust"]
+  },
+  {
+    "id": "q-public-01",
+    "category": "risk",
+    "text": "How do you feel about intimate teasing in semi-public situations (restaurant, park)?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5"],
+    "labels": { "1": "Absolutely not", "3": "Maybe subtle things", "5": "Thrilling" },
+    "tags": ["public", "risk", "thrill"]
+  },
+  {
+    "id": "q-worship-01",
+    "category": "appreciation",
+    "text": "How much do you enjoy body worship (your partner expressing detailed physical admiration)?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5"],
+    "labels": { "1": "Uncomfortable", "3": "Nice sometimes", "5": "Makes me feel amazing" },
+    "tags": ["worship", "body", "appreciation", "verbal"]
+  },
+  {
+    "id": "q-massage-01",
+    "category": "touch",
+    "text": "How do you feel about extended massage and slow physical exploration?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5"],
+    "labels": { "1": "Not my thing", "3": "Enjoyable", "5": "One of my favorites" },
+    "tags": ["massage", "slow", "exploration", "touch"]
+  },
+  {
+    "id": "q-audio-01",
+    "category": "media",
+    "text": "How interested are you in listening to guided audio experiences together?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5"],
+    "labels": { "1": "Not interested", "3": "Curious", "5": "Very interested" },
+    "tags": ["audio", "guided", "immersive"]
+  },
+  {
+    "id": "q-challenge-01",
+    "category": "gamification",
+    "text": "How do you feel about couple challenges (weekly goals, dares, streaks)?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5"],
+    "labels": { "1": "Not for us", "3": "Could be fun", "5": "Love the motivation" },
+    "tags": ["challenge", "streak", "gamification", "motivation"]
+  },
+  {
+    "id": "q-competition-01",
+    "category": "gamification",
+    "text": "Do you enjoy playful competition with your partner?",
+    "type": "scale",
+    "options": ["1", "2", "3", "4", "5"],
+    "labels": { "1": "Not really", "3": "Sometimes", "5": "We're competitive!" },
+    "tags": ["competition", "game", "playful"]
+  },
+  {
+    "id": "q-boundary-01",
+    "category": "boundaries",
+    "text": "Select any topics that are hard boundaries (things you never want suggested):",
+    "type": "checkbox",
+    "options": ["Pain / impact play", "Extreme restraint", "Public exposure", "Degradation / humiliation", "Extreme role power imbalance", "Recording / photography", "Involving other people"],
+    "tags": ["pain", "restraint-extreme", "public-exposure", "degradation", "power-extreme", "recording", "others"]
+  },
+  {
+    "id": "q-frequency-01",
+    "category": "preferences",
+    "text": "How often would you like the app to suggest new content?",
+    "type": "choice",
+    "options": ["Daily — keep things fresh", "Every few days — quality over quantity", "Weekly — when the mood is right", "Only when I ask — I'll browse on my own"],
+    "tags": ["daily", "moderate", "weekly", "on-demand"]
+  }
+]
