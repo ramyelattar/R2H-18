@@ -20,6 +20,8 @@ import com.igniteai.app.feature.onboarding.PairingScreen
 import com.igniteai.app.feature.onboarding.PartnerSetupScreen
 import com.igniteai.app.feature.onboarding.PinSetupScreen
 import com.igniteai.app.feature.onboarding.WelcomeScreen
+import com.igniteai.app.feature.home.HomeScreen
+import com.igniteai.app.feature.home.HomeViewModel
 import com.igniteai.app.feature.session.ConsentGateScreen
 import com.igniteai.app.feature.session.CoolDownScreen
 import com.igniteai.app.feature.session.SessionScreen
@@ -94,6 +96,7 @@ fun IgniteNavGraph(
     startDestination: String = Routes.WELCOME,
     onboardingViewModel: OnboardingViewModel? = null,
     sessionViewModel: SessionViewModel? = null,
+    homeViewModel: HomeViewModel? = null,
 ) {
     NavHost(
         navController = navController,
@@ -200,7 +203,25 @@ fun IgniteNavGraph(
 
         // ── Main ────────────────────────────────────────────
         composable(Routes.HOME) {
-            PlaceholderScreen("Home")
+            val uiState by homeViewModel!!.uiState.collectAsState()
+
+            HomeScreen(
+                uiState = uiState,
+                onCompleteDare = { homeViewModel.completeDare() },
+                onSkipDare = { homeViewModel.skipDare() },
+                onFavoriteDare = { homeViewModel.favoriteDare() },
+                onBlockDare = { homeViewModel.blockDare() },
+                onStartSession = {
+                    sessionViewModel?.initiateSession()
+                    navController.navigate(Routes.CONSENT_GATE)
+                },
+                onOpenVault = {
+                    navController.navigate(Routes.VAULT_UNLOCK)
+                },
+                onOpenSettings = {
+                    navController.navigate(Routes.SETTINGS)
+                },
+            )
         }
         composable(Routes.SETTINGS) {
             PlaceholderScreen("Settings")
