@@ -20,6 +20,9 @@ import com.igniteai.app.feature.onboarding.PairingScreen
 import com.igniteai.app.feature.onboarding.PartnerSetupScreen
 import com.igniteai.app.feature.onboarding.PinSetupScreen
 import com.igniteai.app.feature.onboarding.WelcomeScreen
+import com.igniteai.app.feature.content.ContentViewModel
+import com.igniteai.app.feature.content.DareScreen
+import com.igniteai.app.feature.content.TextMessageScreen
 import com.igniteai.app.feature.home.HomeScreen
 import com.igniteai.app.feature.home.HomeViewModel
 import com.igniteai.app.feature.session.ConsentGateScreen
@@ -97,6 +100,7 @@ fun IgniteNavGraph(
     onboardingViewModel: OnboardingViewModel? = null,
     sessionViewModel: SessionViewModel? = null,
     homeViewModel: HomeViewModel? = null,
+    contentViewModel: ContentViewModel? = null,
 ) {
     NavHost(
         navController = navController,
@@ -288,10 +292,33 @@ fun IgniteNavGraph(
 
         // ── Content (Spark) ─────────────────────────────────
         composable(Routes.DARE) {
-            PlaceholderScreen("Daily Dare")
+            val uiState by contentViewModel!!.uiState.collectAsState()
+
+            androidx.compose.runtime.LaunchedEffect(Unit) {
+                contentViewModel.loadContent("DARE")
+            }
+
+            DareScreen(
+                uiState = uiState,
+                onComplete = { contentViewModel.complete() },
+                onFavorite = { contentViewModel.favorite() },
+                onSkip = { contentViewModel.skip() },
+                onBlock = { contentViewModel.block() },
+            )
         }
         composable(Routes.TEXT_MESSAGE) {
-            PlaceholderScreen("Text Messages")
+            val uiState by contentViewModel!!.uiState.collectAsState()
+
+            androidx.compose.runtime.LaunchedEffect(Unit) {
+                contentViewModel.loadContent("TEXT")
+            }
+
+            TextMessageScreen(
+                uiState = uiState,
+                onFavorite = { contentViewModel.favorite() },
+                onSkip = { contentViewModel.skip() },
+                onBlock = { contentViewModel.block() },
+            )
         }
         composable(Routes.AUDIO_PLAYER) {
             PlaceholderScreen("Audio Player")
