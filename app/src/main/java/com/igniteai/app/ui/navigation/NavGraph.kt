@@ -14,29 +14,45 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.igniteai.app.feature.anticipation.AnticipationViewModel
+import com.igniteai.app.feature.anticipation.CountdownLockScreen
+import com.igniteai.app.feature.anticipation.TeaseSequenceScreen
+import com.igniteai.app.feature.audio.AudioPlayerScreen
+import com.igniteai.app.feature.audio.AudioViewModel
+import com.igniteai.app.feature.auth.AuthGateScreen
+import com.igniteai.app.feature.auth.AuthGateViewModel
+import com.igniteai.app.feature.challenge.ChallengeScreen
+import com.igniteai.app.feature.challenge.ChallengeViewModel
+import com.igniteai.app.feature.content.ContentViewModel
+import com.igniteai.app.feature.content.DareScreen
+import com.igniteai.app.feature.content.TextMessageScreen
+import com.igniteai.app.feature.control.ControlViewModel
+import com.igniteai.app.feature.control.ControllerScreen
+import com.igniteai.app.feature.control.ReceiverScreen
+import com.igniteai.app.feature.heartrate.HeartRateScreen
+import com.igniteai.app.feature.heartrate.HeartRateViewModel
+import com.igniteai.app.feature.home.HomeScreen
+import com.igniteai.app.feature.home.HomeViewModel
 import com.igniteai.app.feature.onboarding.BiometricSetupScreen
 import com.igniteai.app.feature.onboarding.OnboardingViewModel
 import com.igniteai.app.feature.onboarding.PairingScreen
 import com.igniteai.app.feature.onboarding.PartnerSetupScreen
 import com.igniteai.app.feature.onboarding.PinSetupScreen
 import com.igniteai.app.feature.onboarding.WelcomeScreen
-import com.igniteai.app.feature.content.ContentViewModel
-import com.igniteai.app.feature.content.DareScreen
-import com.igniteai.app.feature.content.TextMessageScreen
-import com.igniteai.app.feature.home.HomeScreen
-import com.igniteai.app.feature.home.HomeViewModel
+import com.igniteai.app.feature.payment.PaymentScreen
+import com.igniteai.app.feature.payment.PaymentViewModel
+import com.igniteai.app.feature.scenario.ScenarioScreen
+import com.igniteai.app.feature.scenario.ScenarioViewModel
 import com.igniteai.app.feature.session.ConsentGateScreen
 import com.igniteai.app.feature.session.CoolDownScreen
 import com.igniteai.app.feature.session.SessionScreen
 import com.igniteai.app.feature.session.SessionViewModel
+import com.igniteai.app.feature.settings.SettingsScreen
+import com.igniteai.app.feature.settings.SettingsViewModel
+import com.igniteai.app.feature.vault.VaultScreen
+import com.igniteai.app.feature.vault.VaultUnlockScreen
 import com.igniteai.app.ui.theme.AbyssBlack
 
-/**
- * All navigation routes in IgniteAI.
- *
- * Organized by feature area. Each route is a string constant
- * so typos are caught at compile time (via references, not magic strings).
- */
 object Routes {
     // Onboarding
     const val WELCOME = "welcome"
@@ -80,19 +96,6 @@ object Routes {
     const val AUTH_GATE = "auth_gate"
 }
 
-/**
- * Main navigation graph.
- *
- * Start destination depends on app state:
- * - No couple profile → WELCOME (onboarding)
- * - Has profile → AUTH_GATE (biometric unlock) → HOME
- *
- * Onboarding screens are wired to real composables.
- * Other screens remain placeholder until their feature tasks complete.
- *
- * @param onboardingViewModel Shared ViewModel for onboarding flow state.
- *        Pass null when onboarding is already complete (skips ViewModel creation).
- */
 @Composable
 fun IgniteNavGraph(
     navController: NavHostController = rememberNavController(),
@@ -101,6 +104,20 @@ fun IgniteNavGraph(
     sessionViewModel: SessionViewModel? = null,
     homeViewModel: HomeViewModel? = null,
     contentViewModel: ContentViewModel? = null,
+    audioViewModel: AudioViewModel? = null,
+    anticipationViewModel: AnticipationViewModel? = null,
+    settingsViewModel: SettingsViewModel? = null,
+    authGateViewModel: AuthGateViewModel? = null,
+    paymentViewModel: PaymentViewModel? = null,
+    scenarioViewModel: ScenarioViewModel? = null,
+    controlViewModel: ControlViewModel? = null,
+    heartRateViewModel: HeartRateViewModel? = null,
+    challengeViewModel: ChallengeViewModel? = null,
+    vaultItems: List<com.igniteai.app.data.model.VaultItem> = emptyList(),
+    vaultUnlocked: Boolean = false,
+    onVaultUnlockRequest: () -> Unit = {},
+    onVaultAddItem: (String, String, String) -> Unit = { _, _, _ -> },
+    onVaultDeleteItem: (String) -> Unit = {},
 ) {
     NavHost(
         navController = navController,
@@ -134,8 +151,6 @@ fun IgniteNavGraph(
         composable(Routes.BIOMETRIC_SETUP) {
             BiometricSetupScreen(
                 onEnableBiometric = {
-                    // In real implementation, this triggers BiometricAuthManager.authenticate()
-                    // from the Activity. For now, treat as success.
                     onboardingViewModel?.onBiometricSuccess()
                     navController.navigate(Routes.PIN_SETUP)
                 },
@@ -155,14 +170,9 @@ fun IgniteNavGraph(
                 pinError = state.pinError,
                 onPinChanged = { onboardingViewModel.setPin(it) },
                 onPinConfirmChanged = { onboardingViewModel.setPinConfirm(it) },
-                onConfirm = {
-                    onboardingViewModel.confirmPin()
-                    // Navigation happens via state observation —
-                    // when step changes to PAIRING, we navigate
-                },
+                onConfirm = { onboardingViewModel.confirmPin() },
             )
 
-            // React to step changes from ViewModel
             if (state.step == OnboardingViewModel.OnboardingStep.PAIRING) {
                 navController.navigate(Routes.PAIRING) {
                     popUpTo(Routes.PIN_SETUP) { inclusive = true }
@@ -190,7 +200,6 @@ fun IgniteNavGraph(
                 },
             )
 
-            // Navigate when pairing completes
             if (state.step == OnboardingViewModel.OnboardingStep.FANTASY_QUESTIONNAIRE &&
                 state.pairingStatus == OnboardingViewModel.PairingStatus.CONNECTED
             ) {
@@ -201,8 +210,26 @@ fun IgniteNavGraph(
         }
 
         composable(Routes.FANTASY_QUESTIONNAIRE) {
-            // Will be implemented in Task 8
             PlaceholderScreen("Fantasy Questionnaire")
+        }
+
+        // ── Auth Gate ─────────────────────────────────────
+        composable(Routes.AUTH_GATE) {
+            val uiState by authGateViewModel!!.uiState.collectAsState()
+
+            AuthGateScreen(
+                uiState = uiState,
+                onRequestBiometric = { authGateViewModel.requestBiometric() },
+                onUsePinInstead = { authGateViewModel.showPinEntry() },
+                onPinDigit = { authGateViewModel.onPinDigit(it) },
+                onPinBackspace = { authGateViewModel.onPinBackspace() },
+            )
+
+            if (uiState.state == AuthGateViewModel.AuthState.UNLOCKED) {
+                navController.navigate(Routes.HOME) {
+                    popUpTo(Routes.AUTH_GATE) { inclusive = true }
+                }
+            }
         }
 
         // ── Main ────────────────────────────────────────────
@@ -227,8 +254,26 @@ fun IgniteNavGraph(
                 },
             )
         }
+
         composable(Routes.SETTINGS) {
-            PlaceholderScreen("Settings")
+            val uiState by settingsViewModel!!.uiState.collectAsState()
+
+            SettingsScreen(
+                uiState = uiState,
+                onBack = { navController.popBackStack() },
+                onToneChanged = { settingsViewModel.setTonePreference(it) },
+                onVoiceGenderChanged = { settingsViewModel.setVoiceGender(it) },
+                onNotificationsToggled = { settingsViewModel.setNotificationsEnabled(it) },
+                onSessionTimeLimitChanged = { settingsViewModel.setSessionTimeLimit(it) },
+                onDenyDelayChanged = { settingsViewModel.setDenyDelayDuration(it) },
+                onPavlovianSoundToggled = { settingsViewModel.setPavlovianSoundEnabled(it) },
+                onPavlovianHapticToggled = { settingsViewModel.setPavlovianHapticEnabled(it) },
+                onConditioningIntensityChanged = { settingsViewModel.setConditioningIntensity(it) },
+                onVoiceSafewordToggled = { settingsViewModel.setVoiceSafewordEnabled(it) },
+                onSafewordChanged = { settingsViewModel.setSafeword(it) },
+                onDecoyToggled = { settingsViewModel.setDecoyEnabled(it) },
+                onWipeData = { /* Will trigger PanicWipeManager from Activity */ },
+            )
         }
 
         // ── Session ─────────────────────────────────────────
@@ -238,17 +283,13 @@ fun IgniteNavGraph(
             ConsentGateScreen(
                 localConsented = uiState.localConsented,
                 partnerConsented = uiState.partnerConsented,
-                onAuthenticateLocal = {
-                    // In real implementation, this triggers BiometricAuthManager
-                    sessionViewModel.recordLocalConsent()
-                },
+                onAuthenticateLocal = { sessionViewModel.recordLocalConsent() },
                 onCancel = {
                     sessionViewModel.returnToHome()
                     navController.popBackStack(Routes.HOME, inclusive = false)
                 },
             )
 
-            // Navigate when both consent
             if (uiState.state == SessionViewModel.SessionState.ACTIVE) {
                 navController.navigate(Routes.SESSION) {
                     popUpTo(Routes.CONSENT_GATE) { inclusive = true }
@@ -267,7 +308,6 @@ fun IgniteNavGraph(
                 onEndSession = { sessionViewModel.endSession() },
             )
 
-            // Navigate to cool-down when session ends
             if (uiState.state == SessionViewModel.SessionState.COOL_DOWN) {
                 navController.navigate(Routes.COOL_DOWN) {
                     popUpTo(Routes.SESSION) { inclusive = true }
@@ -306,6 +346,7 @@ fun IgniteNavGraph(
                 onBlock = { contentViewModel.block() },
             )
         }
+
         composable(Routes.TEXT_MESSAGE) {
             val uiState by contentViewModel!!.uiState.collectAsState()
 
@@ -320,56 +361,131 @@ fun IgniteNavGraph(
                 onBlock = { contentViewModel.block() },
             )
         }
+
         composable(Routes.AUDIO_PLAYER) {
-            PlaceholderScreen("Audio Player")
+            val uiState by audioViewModel!!.uiState.collectAsState()
+
+            AudioPlayerScreen(
+                uiState = uiState,
+                onToggleVoiceGender = { audioViewModel.toggleVoiceGender() },
+                onVoiceVolumeChanged = { audioViewModel.setVoiceVolume(it) },
+                onSoundscapeVolumeChanged = { audioViewModel.setSoundscapeVolume(it) },
+                onBreathTap = { audioViewModel.onBreathTap() },
+                onBack = { navController.popBackStack() },
+            )
         }
 
         // ── Anticipation ────────────────────────────────────
         composable(Routes.TEASE_SEQUENCE) {
-            PlaceholderScreen("Tease Sequence")
+            val uiState by anticipationViewModel!!.uiState.collectAsState()
+
+            TeaseSequenceScreen(
+                sequences = uiState.activeSequences,
+                onBack = { navController.popBackStack() },
+            )
         }
+
         composable(Routes.COUNTDOWN_LOCK) {
-            PlaceholderScreen("Countdown Lock")
+            val uiState by anticipationViewModel!!.uiState.collectAsState()
+            val locked = uiState.lockedContent.firstOrNull()
+
+            CountdownLockScreen(
+                lockedContent = locked,
+                onBack = { navController.popBackStack() },
+            )
         }
 
         // ── Vault ───────────────────────────────────────────
         composable(Routes.VAULT_UNLOCK) {
-            PlaceholderScreen("Vault Unlock\nDual biometric required")
+            VaultUnlockScreen(
+                isUnlocked = vaultUnlocked,
+                onRequestUnlock = onVaultUnlockRequest,
+                onEnterVault = {
+                    navController.navigate(Routes.VAULT) {
+                        popUpTo(Routes.VAULT_UNLOCK) { inclusive = true }
+                    }
+                },
+            )
         }
+
         composable(Routes.VAULT) {
-            PlaceholderScreen("Forbidden Vault")
+            VaultScreen(
+                items = vaultItems,
+                onAddItem = onVaultAddItem,
+                onDeleteItem = onVaultDeleteItem,
+                onBack = {
+                    navController.navigate(Routes.HOME) {
+                        popUpTo(Routes.VAULT) { inclusive = true }
+                    }
+                },
+            )
         }
 
         // ── Level 2: Fire ───────────────────────────────────
         composable(Routes.PAYMENT) {
-            PlaceholderScreen("Unlock Fire — $29")
-        }
-        composable(Routes.SCENARIO) {
-            PlaceholderScreen("Roleplay Scenario")
-        }
-        composable(Routes.CONTROLLER) {
-            PlaceholderScreen("Controller Mode")
-        }
-        composable(Routes.RECEIVER) {
-            PlaceholderScreen("Receiver Mode")
-        }
-        composable(Routes.HEART_RATE) {
-            PlaceholderScreen("Heart Rate")
-        }
-        composable(Routes.CHALLENGE) {
-            PlaceholderScreen("Couple Challenge")
+            val uiState by paymentViewModel!!.uiState.collectAsState()
+
+            PaymentScreen(
+                uiState = uiState,
+                onUnlock = { paymentViewModel.startPurchase() },
+                onBack = { navController.popBackStack() },
+            )
         }
 
-        // ── Auth ────────────────────────────────────────────
-        composable(Routes.AUTH_GATE) {
-            PlaceholderScreen("Authentication Required")
+        composable(Routes.SCENARIO) {
+            val uiState by scenarioViewModel!!.uiState.collectAsState()
+
+            ScenarioScreen(
+                uiState = uiState,
+                onChoose = { scenarioViewModel.chooseOption(it) },
+                onBack = { navController.popBackStack() },
+            )
+        }
+
+        composable(Routes.CONTROLLER) {
+            val uiState by controlViewModel!!.uiState.collectAsState()
+
+            ControllerScreen(
+                uiState = uiState,
+                onTriggerHaptic = { controlViewModel.triggerHaptic(it) },
+                onSendCommand = { controlViewModel.sendCommand(it) },
+                onSetReceiverMode = { controlViewModel.setReceiverMode(it) },
+                onSwapRoles = { controlViewModel.requestRoleSwap() },
+                onBack = { navController.popBackStack() },
+            )
+        }
+
+        composable(Routes.RECEIVER) {
+            val uiState by controlViewModel!!.uiState.collectAsState()
+
+            ReceiverScreen(
+                uiState = uiState,
+                onConfirmSwap = { controlViewModel.confirmRoleSwap() },
+            )
+        }
+
+        composable(Routes.HEART_RATE) {
+            val uiState by heartRateViewModel!!.uiState.collectAsState()
+
+            HeartRateScreen(
+                uiState = uiState,
+                onBack = { navController.popBackStack() },
+            )
+        }
+
+        composable(Routes.CHALLENGE) {
+            val uiState by challengeViewModel!!.uiState.collectAsState()
+
+            ChallengeScreen(
+                uiState = uiState,
+                onStart = { challengeViewModel.startChallenge() },
+                onComplete = { challengeViewModel.completeChallenge() },
+                onBack = { navController.popBackStack() },
+            )
         }
     }
 }
 
-/**
- * Temporary placeholder screen used until real screens are built.
- */
 @Composable
 private fun PlaceholderScreen(label: String) {
     Box(
