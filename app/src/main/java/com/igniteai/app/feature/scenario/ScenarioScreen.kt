@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.igniteai.app.ui.components.EmberParticles
-import com.igniteai.app.ui.components.IgniteButton
+import com.igniteai.app.ui.components.R2H18Button
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.EmberOrange
 import com.igniteai.app.ui.theme.MoltenGold
@@ -86,7 +86,7 @@ fun ScenarioScreen(
                     textAlign = TextAlign.Center,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                IgniteButton(text = "Finish", onClick = onFinish, modifier = Modifier.fillMaxWidth())
+                R2H18Button(text = "Finish", onClick = onFinish, modifier = Modifier.fillMaxWidth())
             } else {
                 Text(
                     text = "What happens next?",

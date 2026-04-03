@@ -35,8 +35,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.igniteai.app.data.model.ContentItem
-import com.igniteai.app.ui.components.IgniteButton
-import com.igniteai.app.ui.components.IgniteCard
+import com.igniteai.app.ui.components.R2H18Button
+import com.igniteai.app.ui.components.R2H18Card
 import com.igniteai.app.ui.theme.EmberOrange
 import com.igniteai.app.ui.theme.SafewordRed
 import com.igniteai.app.ui.theme.TextMuted
@@ -86,7 +86,7 @@ fun DailyDareCard(
         visible = visible,
         enter = fadeIn() + slideInVertically(initialOffsetY = { it / 4 }),
     ) {
-        IgniteCard(
+        R2H18Card(
             modifier = modifier.fillMaxWidth(),
             glowing = !dareCompleted,
         ) {
@@ -152,7 +152,7 @@ fun DailyDareCard(
 
                 // Completion button
                 if (!dareCompleted) {
-                    IgniteButton(
+                    R2H18Button(
                         text = "Do It",
                         onClick = onComplete,
                         modifier = Modifier.fillMaxWidth(),

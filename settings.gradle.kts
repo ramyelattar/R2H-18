@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "IgniteAI"
+rootProject.name = "R2H+18"
 include(":app")

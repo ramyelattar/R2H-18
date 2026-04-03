@@ -45,8 +45,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.igniteai.app.data.repository.FantasyQuestion
-import com.igniteai.app.ui.components.IgniteButton
-import com.igniteai.app.ui.components.IgniteCard
+import com.igniteai.app.ui.components.R2H18Button
+import com.igniteai.app.ui.components.R2H18Card
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.CharcoalMedium
 import com.igniteai.app.ui.theme.EmberOrange
@@ -147,7 +147,7 @@ fun FantasyQuestionnaireScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             if (currentIndex > 0) {
-                IgniteButton(
+                R2H18Button(
                     text = "Back",
                     onClick = { currentIndex-- },
                     modifier = Modifier.weight(1f),
@@ -156,13 +156,13 @@ fun FantasyQuestionnaireScreen(
             }
 
             if (currentIndex < questions.size - 1) {
-                IgniteButton(
+                R2H18Button(
                     text = if (answers.containsKey(questions[currentIndex].id)) "Next" else "Skip",
                     onClick = { currentIndex++ },
                     modifier = Modifier.weight(1f),
                 )
             } else {
-                IgniteButton(
+                R2H18Button(
                     text = "Complete",
                     onClick = { onComplete(answers) },
                     modifier = Modifier.weight(1f),
@@ -182,7 +182,7 @@ private fun QuestionCard(
     currentAnswer: Any?,
     onAnswerChanged: (Any) -> Unit,
 ) {
-    IgniteCard(glowing = true) {
+    R2H18Card(glowing = true) {
         Column(
             modifier = Modifier.padding(8.dp),
         ) {

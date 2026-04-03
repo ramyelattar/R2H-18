@@ -6,9 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
-import com.igniteai.app.ui.navigation.IgniteNavGraph
-import com.igniteai.app.ui.theme.IgniteAITheme
+import com.igniteai.app.feature.audio.UiSoundManager
+import com.igniteai.app.ui.navigation.R2H18NavGraph
+import com.igniteai.app.ui.theme.R2H18Theme
 
 /**
  * Single Activity host for the entire app.
@@ -27,9 +29,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            IgniteAITheme {
+            R2H18Theme {
+                DisposableEffect(Unit) {
+                    UiSoundManager.startBackgroundMusic()
+                    onDispose {
+                        UiSoundManager.stopBackgroundMusic()
+                    }
+                }
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    IgniteNavGraph()
+                    R2H18NavGraph()
                 }
             }
         }

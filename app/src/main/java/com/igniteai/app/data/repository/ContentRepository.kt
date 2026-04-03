@@ -47,7 +47,7 @@ class ContentRepository(
      * Load starter content from JSON assets into Room on first launch.
      *
      * Only runs if the stored content version is less than CURRENT_CONTENT_VERSION.
-     * This is called from IgniteAIApp.onCreate() to ensure content is available
+     * This is called from R2H18App.onCreate() to ensure content is available
      * before any screen tries to display it.
      *
      * @param context Application context for accessing assets

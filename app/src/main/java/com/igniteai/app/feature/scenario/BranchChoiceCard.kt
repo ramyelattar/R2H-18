@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.igniteai.app.ui.components.IgniteCard
+import com.igniteai.app.ui.components.R2H18Card
 import com.igniteai.app.ui.theme.TextSecondary
 
 @Composable
@@ -25,7 +25,7 @@ fun BranchChoiceCard(
         visible = true,
         enter = fadeIn() + slideInVertically(initialOffsetY = { it / 2 }),
     ) {
-        IgniteCard(
+        R2H18Card(
             modifier = modifier
                 .fillMaxWidth()
                 .clickable(onClick = onClick),

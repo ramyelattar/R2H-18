@@ -18,26 +18,26 @@ import net.sqlcipher.database.SupportFactory
 object DatabaseProvider {
 
     @Volatile
-    private var instance: IgniteDatabase? = null
+    private var instance: R2H18Database? = null
 
     /**
      * Creates or returns the singleton encrypted database.
      *
      * @param context Application context
      * @param passphrase 32-byte AES key from EncryptionManager
-     * @return Encrypted IgniteDatabase instance
+     * @return Encrypted R2H18Database instance
      */
-    fun create(context: Context, passphrase: ByteArray): IgniteDatabase {
+    fun create(context: Context, passphrase: ByteArray): R2H18Database {
         return instance ?: synchronized(this) {
             instance ?: buildDatabase(context, passphrase).also { instance = it }
         }
     }
 
-    private fun buildDatabase(context: Context, passphrase: ByteArray): IgniteDatabase {
+    private fun buildDatabase(context: Context, passphrase: ByteArray): R2H18Database {
         val factory = SupportFactory(passphrase)
         return Room.databaseBuilder(
             context.applicationContext,
-            IgniteDatabase::class.java,
+            R2H18Database::class.java,
             "ignite_db.enc"
         )
             .openHelperFactory(factory)

@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.igniteai.app.ui.components.EmberParticles
-import com.igniteai.app.ui.components.IgniteButton
+import com.igniteai.app.ui.components.R2H18Button
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.EmberOrange
 import com.igniteai.app.ui.theme.MoltenGold
@@ -45,7 +45,7 @@ fun ChallengeScreen(
                 Spacer(modifier = Modifier.height(16.dp))
                 Text("Score: ${uiState.score}", style = MaterialTheme.typography.displayLarge, color = EmberOrange)
                 Spacer(modifier = Modifier.height(32.dp))
-                IgniteButton(text = "Done", onClick = onFinish, modifier = Modifier.fillMaxWidth())
+                R2H18Button(text = "Done", onClick = onFinish, modifier = Modifier.fillMaxWidth())
             } else {
                 Text("Challenge", style = MaterialTheme.typography.headlineLarge, color = EmberOrange)
                 Spacer(modifier = Modifier.height(24.dp))
@@ -70,9 +70,9 @@ fun ChallengeScreen(
                 Spacer(modifier = Modifier.height(32.dp))
 
                 if (!uiState.timerRunning) {
-                    IgniteButton(text = "Start", onClick = onStart, modifier = Modifier.fillMaxWidth())
+                    R2H18Button(text = "Start", onClick = onStart, modifier = Modifier.fillMaxWidth())
                 } else {
-                    IgniteButton(text = "Done!", onClick = onComplete, modifier = Modifier.fillMaxWidth())
+                    R2H18Button(text = "Done!", onClick = onComplete, modifier = Modifier.fillMaxWidth())
                 }
             }
         }

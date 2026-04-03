@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.igniteai.app.ui.components.EmberParticles
-import com.igniteai.app.ui.components.IgniteCard
+import com.igniteai.app.ui.components.R2H18Card
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.CharcoalLight
 import com.igniteai.app.ui.theme.EmberOrange
@@ -101,7 +101,7 @@ fun TeaseSequenceScreen(
                 } else null
 
                 if (currentMsg != null) {
-                    IgniteCard(glowing = true) {
+                    R2H18Card(glowing = true) {
                         Column(
                             modifier = Modifier.padding(20.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,

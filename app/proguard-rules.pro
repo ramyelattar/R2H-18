@@ -1,4 +1,4 @@
-# IgniteAI ProGuard Rules
+# R2H+18 ProGuard Rules
 
 # Keep Room entities
 -keep class com.igniteai.app.data.model.** { *; }

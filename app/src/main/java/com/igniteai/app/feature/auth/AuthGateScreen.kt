@@ -32,7 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.igniteai.app.ui.components.EmberParticles
-import com.igniteai.app.ui.components.IgniteButton
+import com.igniteai.app.ui.components.R2H18Button
 import com.igniteai.app.ui.components.PulsingGlow
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.DeepCharcoal
@@ -108,14 +108,14 @@ private fun BiometricLockScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         Text(
-            text = "IgniteAI",
+            text = "R2H+18",
             style = MaterialTheme.typography.headlineLarge,
             color = MoltenGold,
         )
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        IgniteButton(
+        R2H18Button(
             text = "Unlock",
             onClick = onUnlock,
             modifier = Modifier.fillMaxWidth(),

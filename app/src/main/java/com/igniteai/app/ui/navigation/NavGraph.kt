@@ -1,5 +1,6 @@
 package com.igniteai.app.ui.navigation
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,12 +9,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.igniteai.app.data.repository.FantasyQuestion
 import com.igniteai.app.feature.anticipation.AnticipationViewModel
 import com.igniteai.app.feature.anticipation.CountdownLockScreen
 import com.igniteai.app.feature.anticipation.TeaseSequenceScreen
@@ -34,6 +38,7 @@ import com.igniteai.app.feature.heartrate.HeartRateViewModel
 import com.igniteai.app.feature.home.HomeScreen
 import com.igniteai.app.feature.home.HomeViewModel
 import com.igniteai.app.feature.onboarding.BiometricSetupScreen
+import com.igniteai.app.feature.onboarding.FantasyQuestionnaireScreen
 import com.igniteai.app.feature.onboarding.OnboardingViewModel
 import com.igniteai.app.feature.onboarding.PairingScreen
 import com.igniteai.app.feature.onboarding.PartnerSetupScreen
@@ -52,6 +57,8 @@ import com.igniteai.app.feature.settings.SettingsViewModel
 import com.igniteai.app.feature.vault.VaultScreen
 import com.igniteai.app.feature.vault.VaultUnlockScreen
 import com.igniteai.app.ui.theme.AbyssBlack
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 object Routes {
     // Onboarding
@@ -97,7 +104,7 @@ object Routes {
 }
 
 @Composable
-fun IgniteNavGraph(
+fun R2H18NavGraph(
     navController: NavHostController = rememberNavController(),
     startDestination: String = Routes.WELCOME,
     onboardingViewModel: OnboardingViewModel? = null,
@@ -210,7 +217,24 @@ fun IgniteNavGraph(
         }
 
         composable(Routes.FANTASY_QUESTIONNAIRE) {
-            PlaceholderScreen("Fantasy Questionnaire")
+            val context = LocalContext.current
+            val questions = remember(context) { loadFantasyQuestions(context) }
+
+            FantasyQuestionnaireScreen(
+                questions = questions,
+                onComplete = {
+                    onboardingViewModel?.completeOnboarding()
+                    navController.navigate(Routes.AUTH_GATE) {
+                        popUpTo(Routes.WELCOME) { inclusive = true }
+                    }
+                },
+                onSkipAll = {
+                    onboardingViewModel?.completeOnboarding()
+                    navController.navigate(Routes.AUTH_GATE) {
+                        popUpTo(Routes.WELCOME) { inclusive = true }
+                    }
+                },
+            )
         }
 
         // ── Auth Gate ─────────────────────────────────────
@@ -367,11 +391,20 @@ fun IgniteNavGraph(
 
             AudioPlayerScreen(
                 uiState = uiState,
-                onToggleVoiceGender = { audioViewModel.toggleVoiceGender() },
-                onVoiceVolumeChanged = { audioViewModel.setVoiceVolume(it) },
-                onSoundscapeVolumeChanged = { audioViewModel.setSoundscapeVolume(it) },
+                onPlayPause = {
+                    if (uiState.isPlaying) {
+                        audioViewModel.stopAll()
+                    } else {
+                        audioViewModel.speakText(
+                            uiState.currentText.ifBlank { "Take a deep breath with me." },
+                        )
+                    }
+                },
+                onStop = { audioViewModel.stopAll() },
+                onToggleGender = { audioViewModel.toggleVoiceGender() },
+                onVoiceVolumeChange = { audioViewModel.setVoiceVolume(it) },
+                onSoundscapeVolumeChange = { audioViewModel.setSoundscapeVolume(it) },
                 onBreathTap = { audioViewModel.onBreathTap() },
-                onBack = { navController.popBackStack() },
             )
         }
 
@@ -380,19 +413,20 @@ fun IgniteNavGraph(
             val uiState by anticipationViewModel!!.uiState.collectAsState()
 
             TeaseSequenceScreen(
-                sequences = uiState.activeSequences,
-                onBack = { navController.popBackStack() },
+                state = uiState.teaseSequence,
             )
         }
 
         composable(Routes.COUNTDOWN_LOCK) {
             val uiState by anticipationViewModel!!.uiState.collectAsState()
-            val locked = uiState.lockedContent.firstOrNull()
-
-            CountdownLockScreen(
-                lockedContent = locked,
-                onBack = { navController.popBackStack() },
-            )
+            uiState.lockedContent.firstOrNull()?.let { locked ->
+                CountdownLockScreen(
+                    lockedContent = locked,
+                    onUnlocked = {
+                        navController.navigate(Routes.DARE)
+                    },
+                )
+            } ?: PlaceholderScreen("No locked content")
         }
 
         // ── Vault ───────────────────────────────────────────
@@ -424,11 +458,12 @@ fun IgniteNavGraph(
         // ── Level 2: Fire ───────────────────────────────────
         composable(Routes.PAYMENT) {
             val uiState by paymentViewModel!!.uiState.collectAsState()
+            val context = LocalContext.current
 
             PaymentScreen(
                 uiState = uiState,
-                onUnlock = { paymentViewModel.startPurchase() },
-                onBack = { navController.popBackStack() },
+                onUnlockFire = { paymentViewModel.openPaymentLink(context) },
+                onReturnHome = { navController.navigate(Routes.HOME) },
             )
         }
 
@@ -438,7 +473,7 @@ fun IgniteNavGraph(
             ScenarioScreen(
                 uiState = uiState,
                 onChoose = { scenarioViewModel.chooseOption(it) },
-                onBack = { navController.popBackStack() },
+                onFinish = { navController.popBackStack() },
             )
         }
 
@@ -449,9 +484,9 @@ fun IgniteNavGraph(
                 uiState = uiState,
                 onTriggerHaptic = { controlViewModel.triggerHaptic(it) },
                 onSendCommand = { controlViewModel.sendCommand(it) },
-                onSetReceiverMode = { controlViewModel.setReceiverMode(it) },
+                onCommandTextChange = { controlViewModel.setCommandText(it) },
+                onSetMode = { controlViewModel.setReceiverMode(it) },
                 onSwapRoles = { controlViewModel.requestRoleSwap() },
-                onBack = { navController.popBackStack() },
             )
         }
 
@@ -460,7 +495,6 @@ fun IgniteNavGraph(
 
             ReceiverScreen(
                 uiState = uiState,
-                onConfirmSwap = { controlViewModel.confirmRoleSwap() },
             )
         }
 
@@ -469,7 +503,6 @@ fun IgniteNavGraph(
 
             HeartRateScreen(
                 uiState = uiState,
-                onBack = { navController.popBackStack() },
             )
         }
 
@@ -480,10 +513,18 @@ fun IgniteNavGraph(
                 uiState = uiState,
                 onStart = { challengeViewModel.startChallenge() },
                 onComplete = { challengeViewModel.completeChallenge() },
-                onBack = { navController.popBackStack() },
+                onFinish = { navController.popBackStack() },
             )
         }
     }
+}
+
+private fun loadFantasyQuestions(context: Context): List<FantasyQuestion> {
+    val json = context.assets
+        .open("content/fantasy_questions.json")
+        .bufferedReader()
+        .use { it.readText() }
+    return Json { ignoreUnknownKeys = true }.decodeFromString(json)
 }
 
 @Composable

@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.igniteai.app.ui.components.EmberParticles
-import com.igniteai.app.ui.components.IgniteButton
+import com.igniteai.app.ui.components.R2H18Button
 import com.igniteai.app.ui.components.PulsingGlow
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.EmberOrange
@@ -74,7 +74,7 @@ fun WelcomeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = "IgniteAI",
+                    text = "R2H+18",
                     style = MaterialTheme.typography.displayLarge,
                     color = EmberOrange,
                     textAlign = TextAlign.Center,
@@ -101,7 +101,7 @@ fun WelcomeScreen(
             }
 
             // Get Started button at bottom
-            IgniteButton(
+            R2H18Button(
                 text = "Get Started",
                 onClick = onGetStarted,
                 modifier = Modifier.fillMaxWidth(),

@@ -10,14 +10,14 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 /**
- * IgniteAI Material 3 Theme
+ * R2H18 Material 3 Theme
  *
  * Always dark — this app has no light mode. The fire/ember palette
  * is designed exclusively for dark backgrounds to maximize visual
  * impact and create an intimate, immersive atmosphere.
  */
 
-private val IgniteColorScheme = darkColorScheme(
+private val R2H18ColorScheme = darkColorScheme(
     // Primary — ember orange (main actions, highlights)
     primary = EmberOrange,
     onPrimary = TextPrimary,
@@ -56,10 +56,10 @@ private val IgniteColorScheme = darkColorScheme(
 )
 
 @Composable
-fun IgniteAITheme(
+fun R2H18Theme(
     content: @Composable () -> Unit
 ) {
-    val colorScheme = IgniteColorScheme
+    val colorScheme = R2H18ColorScheme
 
     // Make system bars match our dark theme
     val view = LocalView.current
@@ -77,8 +77,8 @@ fun IgniteAITheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = IgniteTypography,
-        shapes = IgniteShapes,
+        typography = R2H18Typography,
+        shapes = R2H18Shapes,
         content = content
     )
 }

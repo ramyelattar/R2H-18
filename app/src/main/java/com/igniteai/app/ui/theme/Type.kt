@@ -6,28 +6,28 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 /**
- * IgniteAI Typography
+ * R2H18 Typography
  *
  * Bold, modern, confident. Uses system default sans-serif
  * (Roboto on most Android devices) which is clean and performant.
  * Custom fonts (Inter/Outfit) can be added later without changing this structure.
  */
-val IgniteTypography = Typography(
+val R2H18Typography = Typography(
 
     // Splash screen title, level names
     displayLarge = TextStyle(
         fontWeight = FontWeight.Black,
-        fontSize = 40.sp,
-        lineHeight = 48.sp,
-        letterSpacing = (-1).sp,
+        fontSize = 42.sp,
+        lineHeight = 50.sp,
+        letterSpacing = (-0.8).sp,
     ),
 
     // Section headers ("Daily Dare", "Your Session")
     headlineLarge = TextStyle(
         fontWeight = FontWeight.Bold,
-        fontSize = 28.sp,
-        lineHeight = 34.sp,
-        letterSpacing = (-0.5).sp,
+        fontSize = 30.sp,
+        lineHeight = 36.sp,
+        letterSpacing = (-0.3).sp,
     ),
 
     // Card titles, feature names
@@ -48,8 +48,8 @@ val IgniteTypography = Typography(
     bodyLarge = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.25.sp,
+        lineHeight = 25.sp,
+        letterSpacing = 0.2.sp,
     ),
 
     // Secondary text, descriptions
@@ -73,7 +73,7 @@ val IgniteTypography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
         lineHeight = 20.sp,
-        letterSpacing = 0.5.sp,
+        letterSpacing = 0.35.sp,
     ),
 
     // Small labels, badges

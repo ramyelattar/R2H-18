@@ -23,7 +23,7 @@ import com.igniteai.app.data.model.SessionRecord
 import com.igniteai.app.data.model.VaultItem
 
 /**
- * IgniteAI Room Database.
+ * R2H18 Room Database.
  *
  * Encrypted with SQLCipher (AES-256). All couple data, content,
  * sessions, and preferences live here — never on a server.
@@ -48,7 +48,7 @@ import com.igniteai.app.data.model.VaultItem
     exportSchema = false,
 )
 @TypeConverters(Converters::class)
-abstract class IgniteDatabase : RoomDatabase() {
+abstract class R2H18Database : RoomDatabase() {
 
     abstract fun contentDao(): ContentDao
     abstract fun engagementDao(): EngagementDao

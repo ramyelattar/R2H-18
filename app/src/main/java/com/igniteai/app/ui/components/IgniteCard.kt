@@ -16,7 +16,7 @@ import com.igniteai.app.ui.theme.CharcoalLight
 import com.igniteai.app.ui.theme.EmberOrange
 
 /**
- * IgniteAI styled card with subtle ember border.
+ * R2H18 styled card with subtle ember border.
  *
  * Used for dares, content, settings sections — any content block.
  * The faint ember-colored border makes cards feel warm without
@@ -27,7 +27,7 @@ import com.igniteai.app.ui.theme.EmberOrange
  * @param content Card content composable
  */
 @Composable
-fun IgniteCard(
+fun R2H18Card(
     modifier: Modifier = Modifier,
     glowing: Boolean = false,
     content: @Composable ColumnScope.() -> Unit,
@@ -37,6 +37,9 @@ fun IgniteCard(
         shape = MaterialTheme.shapes.large,
         colors = CardDefaults.cardColors(
             containerColor = CharcoalDark,
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = if (glowing) 8.dp else 2.dp,
         ),
         border = BorderStroke(
             width = if (glowing) 1.5.dp else 0.5.dp,

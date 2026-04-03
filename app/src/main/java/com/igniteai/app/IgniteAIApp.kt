@@ -3,7 +3,7 @@ package com.igniteai.app
 import android.app.Application
 
 /**
- * IgniteAI Application class.
+ * R2H18 Application class.
  *
  * Responsible for app-wide initialization:
  * - Encrypted database setup
@@ -11,7 +11,7 @@ import android.app.Application
  * - Notification channel creation
  * - DI container initialization
  */
-class IgniteAIApp : Application() {
+class R2H18App : Application() {
 
     override fun onCreate() {
         super.onCreate()

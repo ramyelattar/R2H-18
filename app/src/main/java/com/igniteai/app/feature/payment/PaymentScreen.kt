@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.igniteai.app.ui.components.EmberParticles
-import com.igniteai.app.ui.components.IgniteButton
+import com.igniteai.app.ui.components.R2H18Button
 import com.igniteai.app.ui.components.PulsingGlow
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.ConsentGreen
@@ -62,7 +62,7 @@ fun PaymentScreen(
                     Spacer(modifier = Modifier.height(24.dp))
                     Text("Fire Unlocked!", style = MaterialTheme.typography.displayLarge, color = MoltenGold)
                     Spacer(modifier = Modifier.height(32.dp))
-                    IgniteButton(text = "Let's Go", onClick = onReturnHome, modifier = Modifier.fillMaxWidth())
+                    R2H18Button(text = "Let's Go", onClick = onReturnHome, modifier = Modifier.fillMaxWidth())
                 }
 
                 PaymentViewModel.PaymentState.VERIFYING -> {
@@ -112,7 +112,7 @@ fun PaymentScreen(
                     if (uiState.isFireUnlocked) {
                         Text("Already unlocked!", style = MaterialTheme.typography.headlineMedium, color = ConsentGreen)
                     } else {
-                        IgniteButton(text = "Unlock Fire — $29", onClick = onUnlockFire, modifier = Modifier.fillMaxWidth())
+                        R2H18Button(text = "Unlock Fire — $29", onClick = onUnlockFire, modifier = Modifier.fillMaxWidth())
                     }
 
                     if (uiState.error != null) {

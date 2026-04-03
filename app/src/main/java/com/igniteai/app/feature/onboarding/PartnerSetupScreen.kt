@@ -21,8 +21,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.igniteai.app.ui.components.IgniteButton
-import com.igniteai.app.ui.components.IgniteCard
+import com.igniteai.app.ui.components.R2H18Button
+import com.igniteai.app.ui.components.R2H18Card
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.EmberOrange
 import com.igniteai.app.ui.theme.TextMuted
@@ -72,7 +72,7 @@ fun PartnerSetupScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            IgniteCard {
+            R2H18Card {
                 OutlinedTextField(
                     value = partnerName,
                     onValueChange = { if (it.length <= 20) onNameChanged(it) },
@@ -99,7 +99,7 @@ fun PartnerSetupScreen(
             }
         }
 
-        IgniteButton(
+        R2H18Button(
             text = "Continue",
             onClick = onContinue,
             enabled = partnerName.isNotBlank(),
