@@ -2,7 +2,7 @@ package com.igniteai.app.feature.session
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.igniteai.app.core.preferences.AppPreferences
+import com.igniteai.app.core.preferences.SessionSettings
 import com.igniteai.app.data.repository.SessionRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
  */
 class SessionViewModel(
     private val sessionRepository: SessionRepository,
-    private val preferences: AppPreferences,
+    private val preferences: SessionSettings,
 ) : ViewModel() {
 
     /**

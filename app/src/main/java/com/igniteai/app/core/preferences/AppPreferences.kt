@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.map
 // Extension to create DataStore singleton
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "ignite_prefs")
 
-class AppPreferences(private val context: Context) {
+class AppPreferences(private val context: Context) : SessionSettings {
 
     // ── Keys ────────────────────────────────────────────────
 

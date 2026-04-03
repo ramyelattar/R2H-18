@@ -7,7 +7,10 @@ import com.igniteai.app.data.dao.ContentDao
 import com.igniteai.app.data.dao.EngagementDao
 import com.igniteai.app.data.dao.FantasyDao
 import com.igniteai.app.data.dao.PairingDao
+import com.igniteai.app.data.dao.LicenseDao
+import com.igniteai.app.data.dao.ScenarioDao
 import com.igniteai.app.data.dao.SessionDao
+import com.igniteai.app.data.dao.VaultDao
 import com.igniteai.app.data.model.ContentItem
 import com.igniteai.app.data.model.CoupleProfile
 import com.igniteai.app.data.model.EngagementRecord
@@ -53,8 +56,7 @@ abstract class IgniteDatabase : RoomDatabase() {
     abstract fun fantasyDao(): FantasyDao
     abstract fun sessionDao(): SessionDao
 
-    // DAOs added as each feature module is built:
-    // abstract fun vaultDao(): VaultDao
-    // abstract fun scenarioDao(): ScenarioDao
-    // abstract fun licenseDao(): LicenseDao
+    abstract fun vaultDao(): VaultDao
+    abstract fun scenarioDao(): ScenarioDao
+    abstract fun licenseDao(): LicenseDao
 }
