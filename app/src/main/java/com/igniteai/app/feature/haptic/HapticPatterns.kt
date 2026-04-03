@@ -3,7 +3,7 @@ package com.igniteai.app.feature.haptic
 import android.os.VibrationEffect
 
 /**
- * Predefined vibration patterns for IgniteAI.
+ * Predefined vibration patterns for R2H18.
  *
  * Each pattern is designed for a specific emotional context:
  * - GENTLE_PULSE: sensual, slow warmth (200ms on, 300ms off)

@@ -1,4 +1,4 @@
-# IgniteAI V1.0 Implementation Plan
+# R2H18 V1.0 Implementation Plan
 
 > **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -15,19 +15,19 @@
 ## File Structure
 
 ```
-IgniteAI/
+R2H18/
 ├── app/
 │   ├── build.gradle.kts
 │   ├── src/
 │   │   ├── main/
 │   │   │   ├── AndroidManifest.xml
 │   │   │   ├── java/com/igniteai/app/
-│   │   │   │   ├── IgniteAIApp.kt                    # Application class, DI setup
+│   │   │   │   ├── R2H18App.kt                    # Application class, DI setup
 │   │   │   │   ├── MainActivity.kt                    # Single activity, Compose host
 │   │   │   │   │
 │   │   │   │   ├── core/
 │   │   │   │   │   ├── database/
-│   │   │   │   │   │   ├── IgniteDatabase.kt          # Room database definition
+│   │   │   │   │   │   ├── R2H18Database.kt          # Room database definition
 │   │   │   │   │   │   ├── Converters.kt              # Type converters for Room
 │   │   │   │   │   │   └── DatabaseProvider.kt         # Encrypted DB factory (SQLCipher)
 │   │   │   │   │   ├── security/
@@ -147,13 +147,13 @@ IgniteAI/
 │   │   │   │       ├── theme/
 │   │   │   │       │   ├── Color.kt                   # Fire/ember color palette
 │   │   │   │       │   ├── Type.kt                    # Typography
-│   │   │   │       │   ├── Theme.kt                   # IgniteAI Material 3 theme
+│   │   │   │       │   ├── Theme.kt                   # R2H18 Material 3 theme
 │   │   │   │       │   └── Shape.kt                   # Rounded shapes
 │   │   │   │       ├── navigation/
 │   │   │   │       │   └── NavGraph.kt                # All routes + navigation
 │   │   │   │       └── components/
-│   │   │   │           ├── IgniteButton.kt            # Styled buttons (ember glow)
-│   │   │   │           ├── IgniteCard.kt              # Content cards
+│   │   │   │           ├── R2H18Button.kt            # Styled buttons (ember glow)
+│   │   │   │           ├── R2H18Card.kt              # Content cards
 │   │   │   │           ├── EmberParticles.kt          # Fire particle animation
 │   │   │   │           ├── PulsingGlow.kt             # Pulsing glow effect
 │   │   │   │           └── StreakCounter.kt           # Heat streak display
@@ -180,7 +180,7 @@ IgniteAI/
 │   │   │       └── sync/SyncProtocolTest.kt
 │   │   │
 │   │   └── androidTest/java/com/igniteai/app/        # Instrumented tests
-│   │       ├── core/database/IgniteDatabaseTest.kt
+│   │       ├── core/database/R2H18DatabaseTest.kt
 │   │       ├── core/security/BiometricAuthTest.kt
 │   │       └── feature/onboarding/OnboardingFlowTest.kt
 │   │
@@ -211,7 +211,7 @@ IgniteAI/
 - Create: `app/build.gradle.kts`
 - Create: `gradle.properties`
 - Create: `app/src/main/AndroidManifest.xml`
-- Create: `app/src/main/java/com/igniteai/app/IgniteAIApp.kt`
+- Create: `app/src/main/java/com/igniteai/app/R2H18App.kt`
 - Create: `app/src/main/java/com/igniteai/app/MainActivity.kt`
 
 - [ ] **Step 1: Create root settings.gradle.kts**
@@ -232,7 +232,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "IgniteAI"
+rootProject.name = "R2H18"
 include(":app")
 ```
 
@@ -398,12 +398,12 @@ dependencies {
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name=".IgniteAIApp"
+        android:name=".R2H18App"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.IgniteAI">
+        android:theme="@style/Theme.R2H18">
 
         <activity
             android:name=".MainActivity"
@@ -434,12 +434,12 @@ dependencies {
 - [ ] **Step 6: Create Application class**
 
 ```kotlin
-// app/src/main/java/com/igniteai/app/IgniteAIApp.kt
+// app/src/main/java/com/igniteai/app/R2H18App.kt
 package com.igniteai.app
 
 import android.app.Application
 
-class IgniteAIApp : Application() {
+class R2H18App : Application() {
     override fun onCreate() {
         super.onCreate()
         // DI and initialization will be added as modules are built
@@ -460,14 +460,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.igniteai.app.ui.theme.IgniteAITheme
+import com.igniteai.app.ui.theme.R2H18Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            IgniteAITheme {
+            R2H18Theme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     // NavGraph will be added in Task 3
                 }
@@ -487,7 +487,7 @@ Expected: BUILD SUCCESSFUL
 ```bash
 git init
 git add .
-git commit -m "feat: initialize IgniteAI Android project with Kotlin + Compose"
+git commit -m "feat: initialize R2H18 Android project with Kotlin + Compose"
 ```
 
 ---
@@ -499,8 +499,8 @@ git commit -m "feat: initialize IgniteAI Android project with Kotlin + Compose"
 - Create: `app/src/main/java/com/igniteai/app/ui/theme/Type.kt`
 - Create: `app/src/main/java/com/igniteai/app/ui/theme/Shape.kt`
 - Create: `app/src/main/java/com/igniteai/app/ui/theme/Theme.kt`
-- Create: `app/src/main/java/com/igniteai/app/ui/components/IgniteButton.kt`
-- Create: `app/src/main/java/com/igniteai/app/ui/components/IgniteCard.kt`
+- Create: `app/src/main/java/com/igniteai/app/ui/components/R2H18Button.kt`
+- Create: `app/src/main/java/com/igniteai/app/ui/components/R2H18Card.kt`
 - Create: `app/src/main/java/com/igniteai/app/ui/components/EmberParticles.kt`
 - Create: `app/src/main/java/com/igniteai/app/ui/components/PulsingGlow.kt`
 - Create: `app/src/main/java/com/igniteai/app/ui/components/StreakCounter.kt`
@@ -528,11 +528,11 @@ Use `fonts.google.com` — recommend **Inter** or **Outfit** for bold modern fee
 
 Rounded corners (12dp default, 24dp for cards). Theme wires Color + Type + Shape into Material 3 `MaterialTheme`.
 
-- [ ] **Step 4: Create IgniteButton composable**
+- [ ] **Step 4: Create R2H18Button composable**
 
 Styled button with ember glow effect (animated border gradient from orange to red). Takes `text`, `onClick`, `enabled`, `isEmergency` (red for safeword). Uses `animateFloatAsState` for glow pulse.
 
-- [ ] **Step 5: Create IgniteCard composable**
+- [ ] **Step 5: Create R2H18Card composable**
 
 Dark surface card with subtle ember border glow. Used for dares, content, settings. Takes `content` composable lambda.
 
@@ -552,7 +552,7 @@ Displays current streak count with flame icon. Number animates up. Fire icon gro
 
 ```xml
 <!-- strings.xml -->
-<string name="app_name">IgniteAI</string>
+<string name="app_name">R2H18</string>
 <string name="app_name_decoy">Calculator Pro</string>
 <!-- Add all user-facing strings -->
 ```
@@ -565,7 +565,7 @@ Create a temporary preview composable that shows all components. Run on emulator
 
 ```bash
 git add app/src/main/java/com/igniteai/app/ui/ app/src/main/res/
-git commit -m "feat: add IgniteAI fire/ember theme and core UI components"
+git commit -m "feat: add R2H18 fire/ember theme and core UI components"
 ```
 
 ---
@@ -613,7 +613,7 @@ git commit -m "feat: add navigation graph with all screen routes"
 ### Task 4: Encrypted Database
 
 **Files:**
-- Create: `app/src/main/java/com/igniteai/app/core/database/IgniteDatabase.kt`
+- Create: `app/src/main/java/com/igniteai/app/core/database/R2H18Database.kt`
 - Create: `app/src/main/java/com/igniteai/app/core/database/Converters.kt`
 - Create: `app/src/main/java/com/igniteai/app/core/database/DatabaseProvider.kt`
 - Create: `app/src/main/java/com/igniteai/app/data/model/CoupleProfile.kt`
@@ -626,7 +626,7 @@ git commit -m "feat: add navigation graph with all screen routes"
 - Create: `app/src/main/java/com/igniteai/app/data/model/ScenarioNode.kt`
 - Create: `app/src/main/java/com/igniteai/app/data/model/LicenseKey.kt`
 - Test: `app/src/test/java/com/igniteai/app/core/database/ConvertersTest.kt`
-- Test: `app/src/androidTest/java/com/igniteai/app/core/database/IgniteDatabaseTest.kt`
+- Test: `app/src/androidTest/java/com/igniteai/app/core/database/R2H18DatabaseTest.kt`
 
 - [ ] **Step 1: Write unit test for type converters**
 
@@ -659,7 +659,7 @@ Implement `@TypeConverter` methods for all custom types.
 Run: `./gradlew test --tests "*.ConvertersTest"`
 Expected: PASS
 
-- [ ] **Step 6: Create IgniteDatabase (Room)**
+- [ ] **Step 6: Create R2H18Database (Room)**
 
 `@Database` class with all entities and DAOs (empty DAOs for now — will be created per-feature).
 
@@ -669,9 +669,9 @@ Expected: PASS
 // Uses SQLCipher SupportFactory to create encrypted Room database
 // Encryption key derived from Android Keystore
 // Database file: "ignite_db.enc"
-fun provideDatabase(context: Context, passphrase: ByteArray): IgniteDatabase {
+fun provideDatabase(context: Context, passphrase: ByteArray): R2H18Database {
     val factory = SupportFactory(passphrase)
-    return Room.databaseBuilder(context, IgniteDatabase::class.java, "ignite_db.enc")
+    return Room.databaseBuilder(context, R2H18Database::class.java, "ignite_db.enc")
         .openHelperFactory(factory)
         .build()
 }
@@ -809,7 +809,7 @@ Expected: FAIL
 // send(message: SyncMessage) — write to characteristic
 // onMessageReceived: Flow<SyncMessage> — incoming messages
 // disconnect()
-// Uses BLE GATT with custom service UUID for IgniteAI
+// Uses BLE GATT with custom service UUID for R2H18
 ```
 
 - [ ] **Step 6: Implement WifiDirectManager**
@@ -947,7 +947,7 @@ This task is placed here (before onboarding/home screen) so content is available
 //   Insert into Room via ContentDao.insertAll()
 //   Repeat for texts.json
 //   Set "content_loaded_v1" flag in preferences
-// Called from IgniteAIApp.onCreate()
+// Called from R2H18App.onCreate()
 ```
 
 - [ ] **Step 4: Test content loads into database**
@@ -991,7 +991,7 @@ Fire-themed splash with app logo, ember particles background, tagline, and "Get 
 
 - [ ] **Step 3: Create PartnerSetupScreen**
 
-Input field for partner display name. "This name is only visible to your partner." IgniteCard with IgniteButton.
+Input field for partner display name. "This name is only visible to your partner." R2H18Card with R2H18Button.
 
 - [ ] **Step 4: Create BiometricSetupScreen**
 
@@ -1339,7 +1339,7 @@ Main hub layout:
 
 - [ ] **Step 3: Create DailyDareCard**
 
-IgniteCard containing:
+R2H18Card containing:
 - Dare title + body text
 - Tone indicator (color-coded: playful=amber, raw=red, sensual=rose)
 - Action row: ❤️ Favorite | ⏭️ Skip | 🚫 Block
@@ -1685,7 +1685,7 @@ git commit -m "feat: add anticipation engine with tease sequences and countdown 
 Shows Fire tier features with marketing copy:
 - Feature list with fire icons
 - Price: $29 one-time
-- "Unlock Fire" IgniteButton → opens browser with Stripe Payment Link
+- "Unlock Fire" R2H18Button → opens browser with Stripe Payment Link
 - On return from browser (deep link): shows "Verifying payment..." with loading animation
 - Success: celebration animation → "Fire Unlocked!" → navigate to Home
 - Failure: "Payment Pending" with transaction ID and support contact
@@ -1773,7 +1773,7 @@ Full-screen narrative display:
 
 - [ ] **Step 5: Create BranchChoiceCard**
 
-Tappable IgniteCard with choice text. Subtle ember glow on hover/press. When chosen: card expands, others fade, transition to next node.
+Tappable R2H18Card with choice text. Subtle ember glow on hover/press. When chosen: card expands, others fade, transition to next node.
 
 - [ ] **Step 6: Commit**
 

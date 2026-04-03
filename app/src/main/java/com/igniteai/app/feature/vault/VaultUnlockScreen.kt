@@ -31,7 +31,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.igniteai.app.ui.components.EmberParticles
-import com.igniteai.app.ui.components.IgniteButton
+import com.igniteai.app.ui.components.R2H18Button
 import com.igniteai.app.ui.components.PulsingGlow
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.EmberOrange
@@ -100,7 +100,7 @@ fun VaultUnlockScreen(
 
                     Spacer(modifier = Modifier.height(40.dp))
 
-                    IgniteButton(
+                    R2H18Button(
                         text = "Unlock Vault",
                         onClick = onRequestUnlock,
                         modifier = Modifier.fillMaxWidth(),
@@ -121,7 +121,7 @@ fun VaultUnlockScreen(
 
                     Spacer(modifier = Modifier.height(24.dp))
 
-                    IgniteButton(
+                    R2H18Button(
                         text = "Enter",
                         onClick = onEnterVault,
                         modifier = Modifier.fillMaxWidth(),

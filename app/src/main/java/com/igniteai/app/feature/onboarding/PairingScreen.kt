@@ -32,8 +32,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.igniteai.app.ui.components.IgniteButton
-import com.igniteai.app.ui.components.IgniteCard
+import com.igniteai.app.ui.components.R2H18Button
+import com.igniteai.app.ui.components.R2H18Card
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.CharcoalDark
 import com.igniteai.app.ui.theme.ConsentGreen
@@ -167,7 +167,7 @@ private fun ShowCodeTab(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (inviteCode == null) {
-            IgniteCard(glowing = true) {
+            R2H18Card(glowing = true) {
                 Column(
                     modifier = Modifier.padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -181,7 +181,7 @@ private fun ShowCodeTab(
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    IgniteButton(
+                    R2H18Button(
                         text = "Generate Invite Code",
                         onClick = onGenerateCode,
                         modifier = Modifier.fillMaxWidth(),
@@ -189,7 +189,7 @@ private fun ShowCodeTab(
                 }
             }
         } else {
-            IgniteCard(glowing = true) {
+            R2H18Card(glowing = true) {
                 Column(
                     modifier = Modifier.padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -248,7 +248,7 @@ private fun EnterCodeTab(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        IgniteCard {
+        R2H18Card {
             Column(
                 modifier = Modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -289,7 +289,7 @@ private fun EnterCodeTab(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                IgniteButton(
+                R2H18Button(
                     text = "Join Partner",
                     onClick = onJoinWithCode,
                     enabled = inviteCodeInput.length == 6,

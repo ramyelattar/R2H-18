@@ -40,7 +40,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.igniteai.app.data.model.VaultItem
 import com.igniteai.app.ui.components.EmberParticles
-import com.igniteai.app.ui.components.IgniteCard
+import com.igniteai.app.ui.components.R2H18Card
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.DeepCharcoal
 import com.igniteai.app.ui.theme.EmberOrange
@@ -140,7 +140,7 @@ private fun VaultItemCard(
 ) {
     var showDeleteConfirm by remember { mutableStateOf(false) }
 
-    IgniteCard(
+    R2H18Card(
         modifier = Modifier.fillMaxWidth(),
         onClick = { /* decrypt and show — future detail screen */ },
     ) {

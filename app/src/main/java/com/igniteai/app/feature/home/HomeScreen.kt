@@ -29,7 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.igniteai.app.ui.components.EmberParticles
-import com.igniteai.app.ui.components.IgniteButton
+import com.igniteai.app.ui.components.R2H18Button
+import com.igniteai.app.ui.components.R2H18Card
 import com.igniteai.app.ui.components.StreakCounter
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.CharcoalDark
@@ -89,30 +90,32 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.height(32.dp))
 
                 // ── Header: connection status ──────────────────
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        text = "IgniteAI",
-                        style = MaterialTheme.typography.headlineLarge,
-                        color = EmberOrange,
-                    )
+                R2H18Card(glowing = true) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = "R2H+18",
+                            style = MaterialTheme.typography.headlineLarge,
+                            color = EmberOrange,
+                        )
 
-                    // Connection indicator
-                    Icon(
-                        imageVector = if (uiState.isConnected)
-                            Icons.Filled.Bluetooth
-                        else
-                            Icons.Filled.BluetoothDisabled,
-                        contentDescription = if (uiState.isConnected)
-                            "Connected to partner"
-                        else
-                            "Not connected",
-                        tint = if (uiState.isConnected) ConnectionActive else TextMuted,
-                        modifier = Modifier.size(24.dp),
-                    )
+                        // Connection indicator
+                        Icon(
+                            imageVector = if (uiState.isConnected)
+                                Icons.Filled.Bluetooth
+                            else
+                                Icons.Filled.BluetoothDisabled,
+                            contentDescription = if (uiState.isConnected)
+                                "Connected to partner"
+                            else
+                                "Not connected",
+                            tint = if (uiState.isConnected) ConnectionActive else TextMuted,
+                            modifier = Modifier.size(24.dp),
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))
@@ -159,7 +162,7 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.height(32.dp))
 
                 // ── Quick Actions ──────────────────────────────
-                IgniteButton(
+                R2H18Button(
                     text = "Start Session",
                     onClick = onStartSession,
                     modifier = Modifier.fillMaxWidth(),
@@ -171,12 +174,12 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    IgniteButton(
+                    R2H18Button(
                         text = "Vault",
                         onClick = onOpenVault,
                         modifier = Modifier.weight(1f),
                     )
-                    IgniteButton(
+                    R2H18Button(
                         text = "Settings",
                         onClick = onOpenSettings,
                         modifier = Modifier.weight(1f),

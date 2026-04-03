@@ -40,7 +40,7 @@ import java.util.UUID
 class BleManager(private val context: Context) {
 
     companion object {
-        // Custom UUIDs for IgniteAI BLE service
+        // Custom UUIDs for R2H18 BLE service
         val SERVICE_UUID: UUID = UUID.fromString("a1b2c3d4-e5f6-7890-abcd-ef1234567890")
         val CHARACTERISTIC_UUID: UUID = UUID.fromString("a1b2c3d4-e5f6-7890-abcd-ef1234567891")
     }

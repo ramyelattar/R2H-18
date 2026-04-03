@@ -16,8 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.igniteai.app.ui.components.IgniteButton
-import com.igniteai.app.ui.components.IgniteCard
+import com.igniteai.app.ui.components.R2H18Button
+import com.igniteai.app.ui.components.R2H18Card
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.ConsentGreen
 import com.igniteai.app.ui.theme.EmberOrange
@@ -58,7 +58,7 @@ fun BiometricSetupScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            IgniteCard(glowing = true) {
+            R2H18Card(glowing = true) {
                 Column(
                     modifier = Modifier.padding(8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -103,7 +103,7 @@ fun BiometricSetupScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            IgniteButton(
+            R2H18Button(
                 text = "Enable Biometric",
                 onClick = onEnableBiometric,
                 modifier = Modifier.fillMaxWidth(),

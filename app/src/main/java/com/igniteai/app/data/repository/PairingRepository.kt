@@ -88,6 +88,6 @@ class PairingRepository(
      * The partner scans this to initiate key exchange.
      */
     fun generateQrPayload(partnerId: String, partnerName: String, publicKey: String): String {
-        return """{"partnerId":"$partnerId","name":"$partnerName","publicKey":"$publicKey","app":"IgniteAI"}"""
+        return """{"partnerId":"$partnerId","name":"$partnerName","publicKey":"$publicKey","app":"R2H+18"}"""
     }
 }

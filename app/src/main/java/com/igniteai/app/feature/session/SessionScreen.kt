@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.igniteai.app.ui.components.EmberParticles
-import com.igniteai.app.ui.components.IgniteButton
+import com.igniteai.app.ui.components.R2H18Button
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.EmberOrange
 import com.igniteai.app.ui.theme.MoltenGold
@@ -127,7 +127,7 @@ fun SessionScreen(
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                IgniteButton(
+                R2H18Button(
                     text = "End Session",
                     onClick = onEndSession,
                     modifier = Modifier.fillMaxWidth(0.6f),

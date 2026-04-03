@@ -3,7 +3,7 @@ package com.igniteai.app.ui.theme
 import androidx.compose.ui.graphics.Color
 
 /**
- * IgniteAI Fire/Ember Color Palette
+ * R2H18 Fire/Ember Color Palette
  *
  * Design philosophy: Dark with fire/neon — bold, intense, unapologetic.
  * Every color evokes heat, desire, and premium exclusivity.
@@ -27,6 +27,7 @@ val AbyssBlack = Color(0xFF0A0A0A)
 val CharcoalDark = Color(0xFF1A1A1A)
 val CharcoalMedium = Color(0xFF252525)
 val CharcoalLight = Color(0xFF333333)
+val DeepCharcoal = CharcoalDark
 
 // Semantic colors
 val SafewordRed = Color(0xFFFF1744)         // Emergency stop — bright, unmissable

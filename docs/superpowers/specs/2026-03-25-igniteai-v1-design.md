@@ -1,8 +1,8 @@
-# IgniteAI V1.0 — Design Specification
+# R2H18 V1.0 — Design Specification
 
 ## Overview
 
-IgniteAI is a native Android couples intimacy app distributed via direct APK download. V1.0 ships with two tiers: **Spark (free)** and **Fire (paid, one-time $29 unlock)**. The app uses a curated content library with adaptive tone, hybrid audio (pre-recorded + on-device TTS), dual biometric consent, peer-to-peer couple sync, and a bold fire/ember visual identity. Fully private — zero cloud, zero servers, zero data collection.
+R2H18 is a native Android couples intimacy app distributed via direct APK download. V1.0 ships with two tiers: **Spark (free)** and **Fire (paid, one-time $29 unlock)**. The app uses a curated content library with adaptive tone, hybrid audio (pre-recorded + on-device TTS), dual biometric consent, peer-to-peer couple sync, and a bold fire/ember visual identity. Fully private — zero cloud, zero servers, zero data collection.
 
 **Target:** Married couples (marketed, not enforced)
 **Platform:** Android (Kotlin + Jetpack Compose)
@@ -16,7 +16,7 @@ IgniteAI is a native Android couples intimacy app distributed via direct APK dow
 
 ```
 ┌─────────────────────────────────────┐
-│           IgniteAI App              │
+│           R2H18 App              │
 ├─────────────────────────────────────┤
 │  UI Layer (Jetpack Compose)         │
 │  — Screens, navigation, themes      │

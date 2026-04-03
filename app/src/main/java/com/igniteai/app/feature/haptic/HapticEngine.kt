@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 /**
  * Haptic feedback engine — plays vibration patterns during sessions.
  *
- * Wraps Android's Vibrator service with IgniteAI-specific patterns.
+ * Wraps Android's Vibrator service with R2H18-specific patterns.
  * Supports:
  * - Single pattern playback with intensity scaling
  * - Timed sequences (pattern A at 0s, pattern B at 2s, etc.)

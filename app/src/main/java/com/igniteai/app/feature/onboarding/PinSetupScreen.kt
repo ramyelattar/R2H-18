@@ -30,7 +30,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.igniteai.app.ui.components.IgniteButton
+import com.igniteai.app.ui.components.R2H18Button
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.EmberOrange
 import com.igniteai.app.ui.theme.SafewordRed
@@ -138,7 +138,7 @@ fun PinSetupScreen(
             }
         }
 
-        IgniteButton(
+        R2H18Button(
             text = if (!isConfirmPhase) "Next" else "Set PIN",
             onClick = {
                 if (!isConfirmPhase && pin.length == 6) {

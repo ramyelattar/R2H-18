@@ -30,8 +30,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.igniteai.app.data.model.ContentItem
 import com.igniteai.app.ui.components.EmberParticles
-import com.igniteai.app.ui.components.IgniteButton
-import com.igniteai.app.ui.components.IgniteCard
+import com.igniteai.app.ui.components.R2H18Button
+import com.igniteai.app.ui.components.R2H18Card
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.EmberOrange
 import com.igniteai.app.ui.theme.TextMuted
@@ -161,7 +161,7 @@ private fun DareContent(
         Spacer(modifier = Modifier.height(24.dp))
 
         // Dare card
-        IgniteCard(glowing = true) {
+        R2H18Card(glowing = true) {
             Column(
                 modifier = Modifier.padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -187,7 +187,7 @@ private fun DareContent(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        IgniteButton(
+        R2H18Button(
             text = "Done",
             onClick = onComplete,
             modifier = Modifier.fillMaxWidth(0.6f),

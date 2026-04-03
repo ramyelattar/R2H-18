@@ -29,7 +29,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.igniteai.app.ui.components.EmberParticles
-import com.igniteai.app.ui.components.IgniteButton
+import com.igniteai.app.ui.components.R2H18Button
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.ConsentGreen
 import com.igniteai.app.ui.theme.EmberOrange
@@ -122,7 +122,7 @@ fun ConsentGateScreen(
                 Spacer(modifier = Modifier.height(48.dp))
 
                 if (!localConsented) {
-                    IgniteButton(
+                    R2H18Button(
                         text = "Authenticate",
                         onClick = onAuthenticateLocal,
                         modifier = Modifier.fillMaxWidth(),
@@ -137,7 +137,7 @@ fun ConsentGateScreen(
                 }
             }
 
-            IgniteButton(
+            R2H18Button(
                 text = "Cancel",
                 onClick = onCancel,
                 modifier = Modifier.fillMaxWidth(),

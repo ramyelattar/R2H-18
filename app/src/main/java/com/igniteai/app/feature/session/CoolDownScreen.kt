@@ -27,8 +27,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.igniteai.app.ui.components.IgniteButton
-import com.igniteai.app.ui.components.IgniteCard
+import com.igniteai.app.ui.components.R2H18Button
+import com.igniteai.app.ui.components.R2H18Card
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.CoolDownBlue
 import com.igniteai.app.ui.theme.SafewordRed
@@ -137,7 +137,7 @@ fun CoolDownScreen(
             Spacer(modifier = Modifier.height(48.dp))
 
             // Session summary
-            IgniteCard {
+            R2H18Card {
                 Column(
                     modifier = Modifier.padding(8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -159,7 +159,7 @@ fun CoolDownScreen(
             }
         }
 
-        IgniteButton(
+        R2H18Button(
             text = "Return Home",
             onClick = onReturnHome,
             modifier = Modifier.fillMaxWidth(),

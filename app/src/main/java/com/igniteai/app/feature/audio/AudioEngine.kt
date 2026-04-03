@@ -13,7 +13,7 @@ import java.util.Locale
 import java.util.UUID
 
 /**
- * Central audio orchestrator — manages all audio output in IgniteAI.
+ * Central audio orchestrator — manages all audio output in R2H18.
  *
  * Three audio layers play simultaneously:
  * 1. VOICE — TTS narration or pre-recorded voice clips (primary content)

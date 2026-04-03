@@ -19,8 +19,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.igniteai.app.ui.components.EmberParticles
-import com.igniteai.app.ui.components.IgniteButton
-import com.igniteai.app.ui.components.IgniteCard
+import com.igniteai.app.ui.components.R2H18Button
+import com.igniteai.app.ui.components.R2H18Card
 import com.igniteai.app.ui.components.PulsingGlow
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.EmberOrange
@@ -96,7 +96,7 @@ fun CountdownLockScreen(
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                IgniteButton(
+                R2H18Button(
                     text = "Reveal",
                     onClick = { onUnlocked(lockedContent.contentId) },
                     modifier = Modifier.fillMaxWidth(),
@@ -113,7 +113,7 @@ fun CountdownLockScreen(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 // Blurred content preview
-                IgniteCard {
+                R2H18Card {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()

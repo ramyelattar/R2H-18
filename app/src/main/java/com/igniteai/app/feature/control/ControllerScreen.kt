@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.igniteai.app.feature.haptic.HapticPatterns
 import com.igniteai.app.ui.components.EmberParticles
-import com.igniteai.app.ui.components.IgniteButton
+import com.igniteai.app.ui.components.R2H18Button
 import com.igniteai.app.ui.theme.AbyssBlack
 import com.igniteai.app.ui.theme.EmberOrange
 import com.igniteai.app.ui.theme.FlameRed
@@ -70,7 +70,7 @@ fun ControllerScreen(
                     "Heartbeat" to HapticPatterns.HEARTBEAT,
                     "Escalate" to HapticPatterns.ESCALATING,
                 ).forEach { (name, pattern) ->
-                    IgniteButton(text = name, onClick = { onTriggerHaptic(pattern) })
+                    R2H18Button(text = name, onClick = { onTriggerHaptic(pattern) })
                 }
             }
 
@@ -92,7 +92,7 @@ fun ControllerScreen(
                 ),
             )
             Spacer(modifier = Modifier.height(8.dp))
-            IgniteButton(
+            R2H18Button(
                 text = "Send",
                 onClick = { onSendCommand(uiState.commandText) },
                 modifier = Modifier.fillMaxWidth(),
@@ -108,13 +108,13 @@ fun ControllerScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 ControlViewModel.ReceiverMode.entries.forEach { mode ->
-                    IgniteButton(text = mode.name, onClick = { onSetMode(mode) })
+                    R2H18Button(text = mode.name, onClick = { onSetMode(mode) })
                 }
             }
 
             Spacer(modifier = Modifier.weight(1f))
 
-            IgniteButton(text = "Swap Roles", onClick = onSwapRoles, modifier = Modifier.fillMaxWidth())
+            R2H18Button(text = "Swap Roles", onClick = onSwapRoles, modifier = Modifier.fillMaxWidth())
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
