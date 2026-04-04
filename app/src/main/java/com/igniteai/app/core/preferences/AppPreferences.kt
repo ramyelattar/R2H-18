@@ -83,7 +83,7 @@ class AppPreferences(private val context: Context) : SessionSettings {
         it[Keys.TONE_PREFERENCE] ?: "ADAPTIVE"
     }
 
-    val sessionTimeLimit: Flow<Int> = context.dataStore.data.map {
+    override val sessionTimeLimit: Flow<Int> = context.dataStore.data.map {
         it[Keys.SESSION_TIME_LIMIT] ?: 60 // Default: 60 minutes
     }
 
@@ -127,7 +127,7 @@ class AppPreferences(private val context: Context) : SessionSettings {
         it[Keys.VOICE_SAFEWORD_ENABLED] ?: false
     }
 
-    val denyDelayDuration: Flow<Int> = context.dataStore.data.map {
+    override val denyDelayDuration: Flow<Int> = context.dataStore.data.map {
         it[Keys.DENY_DELAY_DURATION] ?: 10 // Default: 10 seconds
     }
 

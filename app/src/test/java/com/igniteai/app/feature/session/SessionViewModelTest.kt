@@ -5,12 +5,13 @@ import com.igniteai.app.data.dao.SessionDao
 import com.igniteai.app.data.model.SessionRecord
 import com.igniteai.app.data.repository.SessionRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.setMain
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -19,6 +20,7 @@ import org.junit.Test
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class SessionViewModelTest {
 
     @get:Rule
@@ -36,7 +38,7 @@ class SessionViewModelTest {
         )
 
         viewModel.initiateSession()
-        advanceUntilIdle()
+        runCurrent()
 
         assertEquals(SessionViewModel.SessionState.CONSENT_GATE, viewModel.uiState.value.state)
         assertEquals(45, viewModel.uiState.value.timeLimitMinutes)
@@ -55,10 +57,10 @@ class SessionViewModelTest {
         )
 
         viewModel.initiateSession()
-        advanceUntilIdle()
+        runCurrent()
 
         viewModel.recordLocalConsent()
-        advanceUntilIdle()
+        runCurrent()
 
         assertEquals(
             SessionViewModel.SessionState.WAITING_PARTNER_CONSENT,
@@ -80,12 +82,12 @@ class SessionViewModelTest {
         )
 
         viewModel.initiateSession()
-        advanceUntilIdle()
+        runCurrent()
         viewModel.recordLocalConsent()
-        advanceUntilIdle()
+        runCurrent()
 
         viewModel.recordPartnerConsent()
-        advanceUntilIdle()
+        runCurrent()
 
         assertEquals(SessionViewModel.SessionState.ACTIVE, viewModel.uiState.value.state)
         assertEquals(true, viewModel.uiState.value.localConsented)
@@ -105,10 +107,10 @@ class SessionViewModelTest {
         )
 
         viewModel.initiateSession()
-        advanceUntilIdle()
+        runCurrent()
 
         viewModel.triggerSafeword()
-        advanceUntilIdle()
+        runCurrent()
 
         assertEquals(SessionViewModel.SessionState.COOL_DOWN, viewModel.uiState.value.state)
         assertEquals(true, viewModel.uiState.value.safewordTriggered)
@@ -126,10 +128,10 @@ class SessionViewModelTest {
         )
 
         viewModel.initiateSession()
-        advanceUntilIdle()
+        runCurrent()
 
         viewModel.endSession()
-        advanceUntilIdle()
+        runCurrent()
 
         assertEquals(SessionViewModel.SessionState.COOL_DOWN, viewModel.uiState.value.state)
         assertEquals(false, viewModel.uiState.value.safewordTriggered)
@@ -168,7 +170,7 @@ class SessionViewModelTest {
         }
     }
 
-    private class MainDispatcherRule(
+    class MainDispatcherRule(
         private val dispatcher: TestDispatcher = StandardTestDispatcher(),
     ) : TestWatcher() {
         override fun starting(description: Description) {

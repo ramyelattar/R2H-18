@@ -72,7 +72,8 @@ fun VaultUnlockScreen(
                 enter = fadeIn() + scaleIn(),
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    PulsingGlow(color = MoltenGold, size = 140.dp) {
+                    Box(contentAlignment = Alignment.Center) {
+                        PulsingGlow(color = MoltenGold, size = 140.dp)
                         Icon(
                             imageVector = Icons.Default.Lock,
                             contentDescription = "Locked",

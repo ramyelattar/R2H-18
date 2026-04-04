@@ -17,7 +17,6 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.igniteai.app.MainActivity
-import com.igniteai.app.R
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
@@ -116,7 +115,7 @@ class DailyDareNotificationWorker(
         )
 
         val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(android.R.drawable.sym_def_app_icon)
             .setContentTitle("Reminder")
             .setContentText("You have something waiting")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

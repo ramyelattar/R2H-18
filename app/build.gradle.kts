@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.devtools.ksp")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 android {
@@ -41,6 +42,30 @@ android {
 
     buildFeatures {
         compose = true
+    }
+}
+
+kover {
+    reports {
+        total {
+            html { onCheck = true }
+            xml { onCheck = true }
+        }
+        filters {
+            excludes {
+                classes(
+                    "*.BuildConfig",
+                    "*.R",
+                    "*.R$*",
+                    "*.Manifest*",
+                )
+            }
+        }
+        verify {
+            rule {
+                minBound(80)
+            }
+        }
     }
 }
 

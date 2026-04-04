@@ -96,7 +96,8 @@ private fun BiometricLockScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        PulsingGlow(color = EmberOrange, size = 120.dp) {
+        Box(contentAlignment = Alignment.Center) {
+            PulsingGlow(color = EmberOrange, size = 120.dp)
             Icon(
                 imageVector = Icons.Default.Fingerprint,
                 contentDescription = "Unlock",

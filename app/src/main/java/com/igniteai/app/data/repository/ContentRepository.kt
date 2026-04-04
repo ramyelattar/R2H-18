@@ -21,7 +21,7 @@ import java.util.UUID
  * - Providing data for the adaptive content algorithm
  *
  * Content flow:
- *   assets/content/*.json → parse → Room (content_item table)
+ *   assets/content/(files).json -> parse -> Room (content_item table)
  *   User interaction → Room (engagement_record table)
  *   Adaptive algorithm queries both tables to pick next content
  */
@@ -230,7 +230,7 @@ class ContentRepository(
 /**
  * Intermediate model for parsing content JSON files.
  *
- * This mirrors the JSON structure in assets/content/*.json.
+ * This mirrors the JSON structure in assets/content/(files).json.
  * Converted to ContentItem (Room entity) via toContentItem().
  *
  * Why a separate class? Room entities use @Entity annotations

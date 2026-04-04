@@ -6,17 +6,15 @@ import androidx.room.PrimaryKey
 /**
  * An item stored in the Forbidden Vault.
  *
- * Content is encrypted with a SEPARATE key from the main database,
- * so even if the main DB key is compromised, vault data stays protected.
- *
- * Types: custom dares, voice notes, saved content from sessions.
+ * Content is encrypted with a separate key from the main database.
  */
 @Entity(tableName = "vault_item")
 data class VaultItem(
     @PrimaryKey val id: String,
-    val type: String,               // "DARE", "VOICE_NOTE", "SAVED_CONTENT"
-    val encryptedContent: ByteArray, // Encrypted with vault-specific key
-    val createdBy: String,          // Partner ID who created it
+    val title: String,
+    val category: String,
+    val encryptedBody: ByteArray,
+    val iv: ByteArray,
     val createdAt: Long,
 ) {
     // ByteArray needs custom equals/hashCode

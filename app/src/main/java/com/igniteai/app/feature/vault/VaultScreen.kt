@@ -141,8 +141,9 @@ private fun VaultItemCard(
     var showDeleteConfirm by remember { mutableStateOf(false) }
 
     R2H18Card(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = { /* decrypt and show — future detail screen */ },
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { /* decrypt and show - future detail screen */ },
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             Text(

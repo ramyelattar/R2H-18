@@ -1,12 +1,18 @@
 package com.igniteai.app.ui.navigation
 
+import android.app.KeyguardManager
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -17,6 +23,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.igniteai.app.data.repository.FantasyQuestion
 import com.igniteai.app.feature.anticipation.AnticipationViewModel
 import com.igniteai.app.feature.anticipation.CountdownLockScreen
@@ -126,6 +135,64 @@ fun R2H18NavGraph(
     onVaultAddItem: (String, String, String) -> Unit = { _, _, _ -> },
     onVaultDeleteItem: (String) -> Unit = {},
 ) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    LaunchedEffect(sessionViewModel) {
+        sessionViewModel?.onProcessRestored()
+    }
+
+    DisposableEffect(sessionViewModel, lifecycleOwner, context) {
+        if (sessionViewModel == null) return@DisposableEffect onDispose { }
+
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_START -> {
+                    sessionViewModel.onAppForegrounded()
+                    val keyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as? KeyguardManager
+                    if (keyguardManager != null && !keyguardManager.isDeviceLocked) {
+                        sessionViewModel.onUnlockSucceededAfterInterruption()
+                    }
+                }
+
+                Lifecycle.Event.ON_STOP -> {
+                    sessionViewModel.onAppBackgrounded()
+                }
+
+                else -> Unit
+            }
+        }
+
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
+    DisposableEffect(sessionViewModel, context) {
+        if (sessionViewModel == null) return@DisposableEffect onDispose { }
+
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(ctx: Context?, intent: Intent?) {
+                when (intent?.action) {
+                    Intent.ACTION_SCREEN_OFF -> sessionViewModel.onDeviceLocked()
+                    Intent.ACTION_USER_PRESENT -> sessionViewModel.onUnlockSucceededAfterInterruption()
+                }
+            }
+        }
+
+        val filter = IntentFilter().apply {
+            addAction(Intent.ACTION_SCREEN_OFF)
+            addAction(Intent.ACTION_USER_PRESENT)
+        }
+
+        context.registerReceiver(receiver, filter)
+
+        onDispose {
+            runCatching { context.unregisterReceiver(receiver) }
+        }
+    }
+
     NavHost(
         navController = navController,
         startDestination = startDestination,
@@ -511,8 +578,13 @@ fun R2H18NavGraph(
 
             ChallengeScreen(
                 uiState = uiState,
-                onStart = { challengeViewModel.startChallenge() },
-                onComplete = { challengeViewModel.completeChallenge() },
+                onStart = {
+                    if (uiState.challenge == null) {
+                        challengeViewModel.loadChallenge()
+                    }
+                    challengeViewModel.startTimer()
+                },
+                onComplete = { challengeViewModel.completeStep() },
                 onFinish = { navController.popBackStack() },
             )
         }
